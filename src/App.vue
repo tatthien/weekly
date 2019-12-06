@@ -1,28 +1,77 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app" :class="$style.app">
+    <form :class="$style.grid">
+      <note
+        v-for="(item, index) in calendar"
+        :index="index"
+        :key="item.id"
+        :id="item.id"
+        :title="item.title"
+      />
+    </form>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Note from '@/components/Note'
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    Note
+  },
+  data () {
+    return {
+      calendar: [
+        {
+          id: 'monday',
+          title: 'Monday'
+        },
+        {
+          id: 'tuesday',
+          title: 'Tuesday'
+        },
+        {
+          id: 'wednesday',
+          title: 'Wednesday'
+        },
+        {
+          id: 'thursday',
+          title: 'Thursday'
+        },
+        {
+          id: 'friday',
+          title: 'Friday'
+        },
+        {
+          id: 'weekend',
+          title: 'Weekend'
+        },
+        {
+          id: 'this_month',
+          title: 'This Month'
+        },
+        {
+          id: 'next_month',
+          title: 'Next Month'
+        }
+      ]
+    }
   }
 }
 </script>
 
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss" module>
+.app {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: 66% auto;
+  grid-gap: 0.75rem;
+  flex-basis: 100%;
 }
 </style>

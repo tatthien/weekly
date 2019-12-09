@@ -127,7 +127,7 @@ export default {
   },
   methods: {
     getContent () {
-      if (window.localStorage.getItem(this.id)) {
+      if (window.localStorage.getItem(this.id) !== null) {
         return window.localStorage.getItem(this.id)
       }
 

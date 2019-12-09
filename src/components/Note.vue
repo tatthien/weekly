@@ -12,6 +12,26 @@
 <script>
 import hljs from 'highlight.js'
 
+const PLACEHOLDER = `o this is a new task.
+x completed task.
+
+Let's create a @tag
+
+Prioritize your task using !low !medium !high
+
+# You can use common markdown's syntax like:
+
+**bold**
+_italic_
+~~strike through~~
+
+# Some ordered list
+
+1. First
+2. Second
+3. And the final
+`
+
 const BRACKETS = new Map([
   ['[', ']'],
   ['(', ')'],
@@ -30,7 +50,7 @@ export default {
   },
   data () {
     return {
-      content: window.localStorage.getItem(this.id) || '',
+      content: this.getContent(),
       today: new Date(),
       editorEl: null,
       highlightEl: null
@@ -106,6 +126,13 @@ export default {
     this.editorEl.addEventListener('input', _ => this.syncInputContent(event))
   },
   methods: {
+    getContent () {
+      if (window.localStorage.getItem(this.id)) {
+        return window.localStorage.getItem(this.id)
+      }
+
+      return this.id === 'monday' ? PLACEHOLDER : ''
+    },
     scrollSync () {
       this.highlightEl.scrollTop = this.editorEl.scrollTop
     },

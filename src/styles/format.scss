@@ -24,6 +24,12 @@
   }
 }
 
+.event {
+  .hljs-bullet {
+    color: var(--indigo-400)
+  }
+}
+
 .url {
   pointer-events: auto;
   text-decoration: none;

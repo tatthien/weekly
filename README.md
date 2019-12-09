@@ -7,6 +7,7 @@ It's a methodology to keep track of your stuff like tasks, events, notes by crea
 ```
 o this is a new task.
 x completed task.
+^ an event.
 
 Let's create a @tag
 

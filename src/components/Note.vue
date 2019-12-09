@@ -75,26 +75,36 @@ export default {
     highlightContent () {
       let codeHighlight = hljs.highlight('markdown', this.content).value + '\n\n'
 
+      // Strike thourgh
       codeHighlight = codeHighlight.replace(
         /~~(.*?)~~/g,
         `<span class="strikethrough">~~$1~~</span>`
       )
 
+      // Tag
       codeHighlight = codeHighlight.replace(
         /@([\w-_]+)/g,
         `<span class="tag">@$1</span>`
       )
 
+      // Open task
       codeHighlight = codeHighlight.replace(
         /^(o) (.*)/gm,
-        `<span class="task"><span class="hljs-bullet">$1</span> <span>$2</span></span>`
+        '<span class="task"><span class="hljs-bullet">$1</span> <span>$2</span></span>'
       )
 
+      codeHighlight = codeHighlight.replace(
+        /^(\^) (.*)/gm,
+        '<span class="event"><span class="hljs-bullet">$1</span> <span>$2</span></span>'
+      )
+
+      // Completed task
       codeHighlight = codeHighlight.replace(
         /^(x) (.*)/gm,
         `<span class="task complete"><span class="hljs-bullet">$1</span> <span>$2</span></span>`
       )
 
+      // Priorities
       codeHighlight = codeHighlight.replace(
         /!(high|medium|low)/gmi,
         (match, value) => {
@@ -102,6 +112,7 @@ export default {
         }
       )
 
+      // Cickable link
       codeHighlight = codeHighlight.replace(
         /(!\[.*\]\((.*)\))/g,
         (match, all, link) => {

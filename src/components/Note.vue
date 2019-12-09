@@ -1,11 +1,11 @@
 <template>
   <label :for="id" :class="noteClasses">
-    <span :class="$style.heading">
+    <span class="heading">
       {{ title }}
       <span v-if="isToday" v-text="dateLabel"></span>
     </span>
-    <pre :class="[$style.editor, $style.highlight]" v-html="highlightContent" ref="highlight"></pre>
-    <textarea :id="id" spellcheck="false" :class="[$style.editor, $style.textarea]" v-model="content" ref="editor"></textarea>
+    <pre class="editor highlight" v-html="highlightContent" ref="highlight"></pre>
+    <textarea :id="id" spellcheck="false" class="editor textarea" v-model="content" ref="editor"></textarea>
   </label>
 </template>
 
@@ -47,9 +47,9 @@ export default {
       return `${this.today.getDate()}.${this.today.getMonth() + 1}`
     },
     noteClasses () {
-      let classes = [this.$style.note]
-      if (this.isMonth) classes.push(this.$style.month)
-      if (this.isToday) classes.push(this.$style.today)
+      let classes = ['note']
+      if (this.isMonth) classes.push('month')
+      if (this.isToday) classes.push('today')
       return classes
     },
     highlightContent () {
@@ -66,13 +66,20 @@ export default {
       )
 
       codeHighlight = codeHighlight.replace(
-        /(\[ \] .*)/g,
-        `<span class="checklist">$1</span>`
+        /^(o) (.*)/gm,
+        `<span class="task"><span class="hljs-bullet">$1</span> <span>$2</span></span>`
       )
 
       codeHighlight = codeHighlight.replace(
-        /(\[x\] .*)/g,
-        `<span class="checklist checked">$1</span>`
+        /^(x) (.*)/gm,
+        `<span class="task complete"><span class="hljs-bullet">$1</span> <span>$2</span></span>`
+      )
+
+      codeHighlight = codeHighlight.replace(
+        /!(high|medium|low)/gmi,
+        (match, value) => {
+          return `<span class="priority ${value.toLowerCase()}">${match}</span>`
+        }
       )
 
       codeHighlight = codeHighlight.replace(
@@ -125,7 +132,7 @@ export default {
 }
 </script>
 
-<style lang="scss" module>
+<style lang="scss" scoped>
   .note {
     background: #fff;
     display: flex;
@@ -142,6 +149,9 @@ export default {
 
   .today {
     background: var(--yellow-100);
+    .heading {
+      border-color: var(--orange-200);
+    }
   }
 
   .heading {

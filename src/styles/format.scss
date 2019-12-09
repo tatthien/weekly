@@ -1,6 +1,6 @@
 .strikethrough {
   text-decoration: line-through;
-  color: var(--gray-400)
+  color: var(--gray-600)
 }
 
 .tag {
@@ -10,10 +10,17 @@
   color: var(--blue-900);
 }
 
-.checklist {
-  font-weight: 500;
-  &.checked {
-    @extend .strikethrough;
+.task {
+  .hljs-bullet {
+    color: var(--blue-400)
+  }
+  &.complete {
+    .hljs-bullet {
+      color: var(--orange-400)
+    }
+    span:not([class="hljs-bullet"]) {
+      @extend .strikethrough;
+    }
   }
 }
 
@@ -22,4 +29,21 @@
   text-decoration: none;
   background: var(--gray-200);
   border-radius: 3px;
+}
+
+.priority {
+  border-radius: 3px;
+  font-weight: 600;
+  &.low {
+    background: var(--yellow-200);
+    color: var(--orange-700);
+  }
+  &.medium {
+    background: var(--orange-200);
+    color: var(--orange-900);
+  }
+  &.high {
+    background: var(--tomato-300);
+    color: var(--tomato-900);
+  }
 }

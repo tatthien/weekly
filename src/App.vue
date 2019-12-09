@@ -1,6 +1,6 @@
 <template>
-  <div id="app" :class="$style.app">
-    <form :class="$style.grid">
+  <div id="app" class="app">
+    <form class="grid">
       <note
         v-for="(item, index) in calendar"
         :index="index"
@@ -60,7 +60,7 @@ export default {
 }
 </script>
 
-<style lang="scss" module>
+<style lang="scss" scoped>
 .app {
   display: flex;
   width: 100%;
@@ -69,7 +69,7 @@ export default {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(6, minmax(300px, 1fr));
   grid-template-rows: 66% auto;
   grid-gap: 0.75rem;
   flex-basis: 100%;

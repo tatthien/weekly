@@ -1,15 +1,7 @@
-<template>
-  <div id="app" class="app">
-    <form class="grid">
-      <note
-        v-for="(item, index) in calendar"
-        :index="index"
-        :key="item.id"
-        :id="item.id"
-        :title="item.title"
-      />
-    </form>
-  </div>
+<template lang="pug">
+  #app.app
+    form.grid
+      note(v-for="(item, index) in calendar", :index="index", :key="item.id", :id="item.id", :title="item.title")
 </template>
 
 <script>

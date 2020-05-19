@@ -60,6 +60,7 @@ export default {
 }
 
 .grid {
+  padding: 1rem;
   display: grid;
   grid-template-columns: repeat(6, minmax(300px, 1fr));
   grid-template-rows: 66% auto;

@@ -112,6 +112,7 @@
   --gray-900: #1a202c;
 }
 
+@import './font-face.scss';
 @import './format.scss';
 
 html,
@@ -120,7 +121,7 @@ body {
 }
 
 body {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'iA Writer Duospace', monospace;
   display: flex;
   line-height: 1;
   font-size: 1rem;

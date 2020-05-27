@@ -3,11 +3,13 @@
   color: var(--gray-600)
 }
 
-.tag {
-  font-weight: 700;
+.badge {
   border-radius: 3px;
-  background: var(--blue-300);
-  color: var(--blue-900);
+  color: var(--white);
+}
+
+.tag {
+  background: var(--color-tag);
 }
 
 .task {
@@ -26,7 +28,7 @@
 
 .event {
   .hljs-bullet {
-    color: var(--indigo-400)
+    color: var(--color--event);
   }
 }
 
@@ -38,18 +40,13 @@
 }
 
 .priority {
-  border-radius: 3px;
-  font-weight: 600;
   &.low {
-    background: var(--yellow-200);
-    color: var(--orange-700);
+    background: var(--color-priority-low);
   }
   &.medium {
-    background: var(--orange-200);
-    color: var(--orange-900);
+    background: var(--color-priority-medium);
   }
   &.high {
-    background: var(--tomato-300);
-    color: var(--tomato-900);
+    background: var(--color-priority-high);
   }
 }

@@ -82,7 +82,7 @@ export default {
       // Tag
       codeHighlight = codeHighlight.replace(
         /@([\w-_]+)/g,
-        `<span class="tag">@$1</span>`
+        `<span class="badge tag">@$1</span>`
       )
 
       // Open task
@@ -106,7 +106,7 @@ export default {
       codeHighlight = codeHighlight.replace(
         /!(high|medium|low)/gmi,
         (match, value) => {
-          return `<span class="priority ${value.toLowerCase()}">${match}</span>`
+          return `<span class="badge priority ${value.toLowerCase()}">${match}</span>`
         }
       )
 
@@ -173,10 +173,10 @@ export default {
     background: #fff;
     display: flex;
     flex-direction: column;
-    color: var(--color-day-text);
     position: relative;
-    border-radius: 4px;
-    box-shadow: 0 1px 6px rgba(0,0,0,.05);
+    box-shadow: 0 0 0 1px var(--color-border);
+
+    --heading-height: 40px;
   }
 
   .month {
@@ -184,16 +184,17 @@ export default {
   }
 
   .today {
-    background: var(--yellow-100);
     .heading {
-      border-color: var(--orange-200);
+      background: var(--color-heading-highlight);
     }
   }
 
   .heading {
-    border-bottom: 1px solid var(--gray-300);
+    border-bottom: 1px solid var(--color-border);
+    padding: 0 1rem;
+    height: var(--heading-height);
+    line-height: var(--heading-height);
     font-weight: 600;
-    padding: .5rem;
     display: flex;
     justify-content: space-between;
     text-transform: uppercase;
@@ -204,8 +205,8 @@ export default {
   .editor {
     position: absolute;
     width: 100%;
-    height: calc(100% - 29px);
-    top: 29px;
+    height: calc(100% - var(--heading-height));
+    top: var(--heading-height);
     border: 0;
     resize: none;
     background: none;
@@ -217,6 +218,7 @@ export default {
     color: var(--color-day-text);
     white-space: pre-wrap;
     word-wrap: break-word;
+    outline: none;
   }
 
   .highlight {

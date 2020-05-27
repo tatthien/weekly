@@ -10,10 +10,11 @@
 <script>
 import hljs from 'highlight.js'
 
-const PLACEHOLDER = `o this is a new task.
-x completed task.
+const PLACEHOLDER = `# Todo
+\`[ ] Your open task.\`
+\`[x] The completed one.\`
 
-Let's create a @tag
+You can create a @tag or @another-tag like this.
 
 Prioritize your task using !low !medium !high
 
@@ -23,8 +24,9 @@ Prioritize your task using !low !medium !high
 _italic_
 ~~strike through~~
 
-# Some ordered list
+> Stay hungry, stay foolish
 
+# Some ordered list
 1. First
 2. Second
 3. And the final

@@ -13,22 +13,38 @@
 }
 
 .task {
-  .hljs-bullet {
-    color: var(--blue-400)
+  position: relative;
+
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 2px;
+    left: 12px;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--color-text);
   }
-  &.complete {
-    .hljs-bullet {
-      color: var(--orange-400)
-    }
-    span:not([class="hljs-bullet"]) {
-      @extend .strikethrough;
+
+  &.completed {
+    text-decoration: line-through;
+    color: var(--color-gray-1);
+
+    &:before {
+      content: "✔";
+      background: var(--color-text);
+      color: white;
+      line-height: 1;
+      font-weight: bold;
+      font-size: 0.85rem;
+      text-align: center;
     }
   }
 }
 
 .event {
   .hljs-bullet {
-    color: var(--color--event);
+    color: var(--color-event);
   }
 }
 

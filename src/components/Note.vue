@@ -87,19 +87,19 @@ export default {
 
       // Open task
       codeHighlight = codeHighlight.replace(
-        /^(o) (.*)/gm,
-        '<span class="task"><span class="hljs-bullet">$1</span> <span>$2</span></span>'
+        /^(\[\s{1}\]) (.*)/gm,
+        '<span class="task open"><span class="invisible">$1</span><span> $2</span></span>'
+      )
+
+      // Completed task
+      codeHighlight = codeHighlight.replace(
+        /^(\[x\]) (.*)/gm,
+        '<span class="task completed"><span class="invisible">$1</span><span> $2</span></span>'
       )
 
       codeHighlight = codeHighlight.replace(
         /^(\^) (.*)/gm,
         '<span class="event"><span class="hljs-bullet">$1</span> <span>$2</span></span>'
-      )
-
-      // Completed task
-      codeHighlight = codeHighlight.replace(
-        /^(x) (.*)/gm,
-        `<span class="task complete"><span class="hljs-bullet">$1</span> <span>$2</span></span>`
       )
 
       // Priorities
@@ -159,7 +159,8 @@ export default {
         let cursorPos = this.editorEl.selectionStart
         let left = this.content.substring(0, cursorPos)
         let right = this.content.substring(cursorPos)
-        this.content = left + keyPressed + BRACKETS.get(keyPressed) + right
+        let whitespace = keyPressed === '[' ? ' ' : ''
+        this.content = left + keyPressed + whitespace + BRACKETS.get(keyPressed) + right + whitespace
         this.editorEl.selectionEnd = cursorPos + 1
         e.preventDefault()
       }

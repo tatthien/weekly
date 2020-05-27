@@ -10,7 +10,8 @@
   --color-priority-low: #ffc107;
   --color-tag: #2c3338;
   --color-heading-highlight: #ffeaaa;
-  --color--event: #d82f2f;
+  --color-event: #d82f2f;
+  --color-gray-1: #bcbcbf;
 }
 
 @import './font-face.scss';
@@ -28,4 +29,8 @@ body {
   font-size: 1rem;
   background: var(--color-body-bg);
   color: var(--color-text);
+}
+
+.invisible {
+  opacity: 0;
 }

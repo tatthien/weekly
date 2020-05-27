@@ -112,7 +112,7 @@ export default {
 
       // Cickable link
       codeHighlight = codeHighlight.replace(
-        /(!\[.*\]\((.*)\))/g,
+        /(\[.*\]\((.*)\))/g,
         (match, all, link) => {
           let m = link.match(/>(.*)</)
           if (m && m.length > 1) {

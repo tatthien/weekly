@@ -1,6 +1,6 @@
 .strikethrough {
   text-decoration: line-through;
-  color: var(--gray-600)
+  color: var(--color-task-completed);
 }
 
 .badge {
@@ -28,7 +28,7 @@
 
   &.completed {
     text-decoration: line-through;
-    color: var(--color-gray-1);
+    color: var(--color-task-completed);
 
     &:before {
       content: "✔";
@@ -51,8 +51,13 @@
 .url {
   pointer-events: auto;
   text-decoration: none;
-  background: var(--gray-200);
+  background: var(--color-link-bg);
+  color: var(--color-text);
   border-radius: 3px;
+  opacity: .85;
+  &:hover {
+    opacity: 1;
+  }
 }
 
 .priority {

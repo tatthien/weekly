@@ -1,7 +1,7 @@
 /* Ocean Comment */
 .hljs-comment,
 .hljs-quote {
-  color: var(--gray-600);
+  color: var(--color-quote);
 }
 
 /* Ocean Red */
@@ -24,8 +24,9 @@
 .hljs-type,
 .hljs-params,
 .hljs-meta,
-.hljs-link {
-  color: var(--orange-400);
+.hljs-link,
+.hljs-code {
+  color: var(--color-quote);
 }
 
 /* Ocean Yellow */

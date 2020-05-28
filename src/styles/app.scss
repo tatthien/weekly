@@ -14,6 +14,7 @@
   --color-task-completed: #bcbcbf;
   --color-link-bg: #ececec;
   --color-quote: #556069;
+  --header-height: 40px;
 }
 
 @import './font-face.scss';
@@ -35,4 +36,54 @@ body {
 
 .invisible {
   opacity: 0;
+}
+
+
+.app {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.app-header {
+  height: var(--header-height);
+  width: 100%;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  background: #fff;
+  z-index: 100;
+  border-bottom: 1px solid var(--color-border);
+
+  &__inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+  }
+
+  nav {
+    a {
+      color: var(--color-text);
+    }
+
+    svg {
+      width: 16px;
+    }
+  }
+}
+
+main {
+  margin-top: var(--header-height);
+}
+
+.grid {
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(300px, 1fr));
+  grid-template-rows: 66% auto;
+  grid-gap: 0.75rem;
+  height: 100%;
 }

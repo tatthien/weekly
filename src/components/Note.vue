@@ -158,13 +158,17 @@ export default {
     },
     hitBracket (keyPressed, e) {
       if (BRACKETS.has(keyPressed)) {
+        const isSquareBracket = keyPressed === '['
         let cursorPos = this.editorEl.selectionStart
         let left = this.content.substring(0, cursorPos)
         let right = this.content.substring(cursorPos)
-        let whitespace = keyPressed === '[' ? ' ' : ''
+        let whitespace = isSquareBracket ? ' ' : ''
         this.content = left + keyPressed + whitespace + BRACKETS.get(keyPressed) + right + whitespace
-        this.editorEl.selectionEnd = cursorPos + 1
-        e.preventDefault()
+
+        this.$nextTick(() => {
+          this.editorEl.selectionEnd = cursorPos + (isSquareBracket ? 4 : 1)
+          e.preventDefault()
+        })
       }
     }
   }
@@ -221,7 +225,6 @@ export default {
     color: var(--color-day-text);
     white-space: pre-wrap;
     word-wrap: break-word;
-    outline: none;
   }
 
   .highlight {
@@ -233,6 +236,11 @@ export default {
 
   .textarea {
     z-index: 1;
+    outline: none;
     -webkit-text-fill-color: transparent;
+
+    &::selection {
+      background: #ffeaa9
+    }
   }
 </style>

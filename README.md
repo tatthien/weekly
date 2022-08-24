@@ -2,7 +2,7 @@
 
 It's a methodology to keep track of your stuff like tasks, events, notes by creating the bullets. I found that I love this method and easily adapt to it than other tools that I've tried like Trello, note-taking apps, to-do apps.
 
-<p><img style="display: block; margin: 0 auto; max-width: 100%;" src="https://user-images.githubusercontent.com/3280351/70597741-b7b4de00-1c1b-11ea-8265-efa00e1b744f.png"/></p>
+<img width="1792" alt="demo" src="https://user-images.githubusercontent.com/72242664/186437039-2260c441-79d7-4a41-99a5-f0906f625e36.png">
 
 ## Usage
 

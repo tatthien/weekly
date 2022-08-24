@@ -1,10 +1,12 @@
-<template lang="pug">
-  label(:for="id", :class="noteClasses")
-    span.heading
-      span(v-text="title")
-      span(v-if="isToday", v-text="toDayLabel")
-    pre.editor.highlight(v-html="highlightContent", ref="highlight")
-    textarea.editor.textarea(:id="id", v-model="content", ref="editor")
+<template>
+  <label :for="id" :class="noteClasses">
+    <span class="heading">
+      <span>{{ title }}</span>
+      <span v-if="isToday">{{ toDayLabel }}</span>
+    </span>
+    <pre ref="highlight" class="editor highlight" v-html="highlightContent"></pre>
+    <textarea v-model="content" ref="editor" class="editor textarea" :id="id"></textarea>
+  </label>
 </template>
 
 <script>

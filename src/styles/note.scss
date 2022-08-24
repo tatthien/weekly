@@ -5,15 +5,25 @@
   flex-direction: column;
   position: relative;
   box-shadow: 0 0 0 1px var(--color-border);
+  grid-row: 1 / 3;
 
   &.month {
     grid-column: span 3;
+    grid-row: 3 / 4;
   }
 
-  .today {
+  &.today {
     .heading {
       background: var(--color-heading-highlight);
     }
+  }
+
+  &.saturday {
+    grid-row: 1 / 2;
+  }
+
+  &.sunday {
+    grid-row: 2 / 3;
   }
 
   .heading {

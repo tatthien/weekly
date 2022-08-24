@@ -2,7 +2,7 @@
   <label :for="id" :class="noteClasses">
     <span class="heading">
       <span>{{ title }}</span>
-      <span v-if="isToday">{{ toDayLabel }}</span>
+      <span :class="[!isToday ? 'secondary' : '']">{{ dateLabel }}</span>
     </span>
     <pre ref="highlight" class="editor highlight" v-html="highlightContent"></pre>
     <textarea v-model="content" ref="editor" class="editor textarea" :id="id"></textarea>
@@ -27,7 +27,8 @@ export default {
       required: true
     },
     index: Number,
-    title: String
+    title: String,
+    date: Date
   },
   data () {
     return {
@@ -44,11 +45,11 @@ export default {
     isToday () {
       return this.today.getDay() === this.index + 1
     },
-    toDayLabel () {
-      return `${this.today.getDate()}.${this.today.getMonth() + 1}`
+    dateLabel () {
+      return this.date ? `${this.date.getDate()}.${this.today.getMonth() + 1}` : ''
     },
     noteClasses () {
-      let classes = ['note']
+      let classes = ['note', this.id]
       if (this.isMonth) classes.push('month')
       if (this.isToday) classes.push('today')
       return classes

@@ -24,11 +24,12 @@
     <main class="app-main">
       <form class="grid">
         <Note
-          v-for="(item, index) in calendar"
+          v-for="(item, index) in list"
           :index="index"
           :key="item.id"
           :id="item.id"
           :title="item.title"
+          :date="item.date"
         />
       </form>
     </main>
@@ -44,40 +45,26 @@ export default {
   },
   data () {
     return {
-      calendar: [
-        {
-          id: 'monday',
-          title: 'Monday'
-        },
-        {
-          id: 'tuesday',
-          title: 'Tuesday'
-        },
-        {
-          id: 'wednesday',
-          title: 'Wednesday'
-        },
-        {
-          id: 'thursday',
-          title: 'Thursday'
-        },
-        {
-          id: 'friday',
-          title: 'Friday'
-        },
-        {
-          id: 'weekend',
-          title: 'Weekend'
-        },
-        {
-          id: 'this_month',
-          title: 'This Month'
-        },
-        {
-          id: 'next_month',
-          title: 'Next Month'
+      today: new Date(),
+      calendar: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'This Month', 'Next Month']
+    }
+  },
+  computed: {
+    mondayOfCurrentWeek () {
+      const first = this.today.getDate() - this.today.getDay() + 1
+      const monday = new Date(this.today.setDate(first))
+
+      return monday
+    },
+    list () {
+      return this.calendar.map((item, index) => {
+        const date = index <= 6 ? new Date(new Date().setDate(this.mondayOfCurrentWeek.getDate() + index)) : null
+        return {
+          id: item.toLowerCase().replace(/\s/gm, '_'),
+          title: item,
+          date
         }
-      ]
+      })
     }
   }
 }

@@ -68,17 +68,16 @@ export default {
         `<span class="badge tag">@$1</span>`
       )
 
-      // Open task
-      codeHighlight = codeHighlight.replace(
-        /^(\[\s{1}\]) (.*)/gm,
-        '<span class="task open"><span class="invisible">$1</span><span> $2</span></span>'
-      )
+      // xit task
+      codeHighlight = codeHighlight.replace(/^\[(x|@|~|\s)\] (.*)/gm, (match, p1, p2) => {
+        let type = ''
+        if (p1 === ' ') type = 'open'
+        if (p1 === 'x') type = 'checked'
+        if (p1 === '~') type = 'obsolete'
+        if (p1 === '@') type = 'ongoing'
 
-      // Completed task
-      codeHighlight = codeHighlight.replace(
-        /^(\[x\]) (.*)/gm,
-        '<span class="task completed"><span class="invisible">$1</span><span> $2</span></span>'
-      )
+        return `<span class="task ${type}" data-slug="${match}"><span class="checkbox">[${p1}]</span><span> ${p2}</span></span>`
+      })
 
       codeHighlight = codeHighlight.replace(
         /^(\^) (.*)/gm,
@@ -93,7 +92,7 @@ export default {
         }
       )
 
-      // Cickable link
+      // Clickable link
       codeHighlight = codeHighlight.replace(
         /(\[.*\]\((.*)\))/g,
         (match, all, link) => {
@@ -106,6 +105,10 @@ export default {
         }
       )
 
+      this.$nextTick(() => {
+        document.querySelectorAll('.task').forEach(el => el.addEventListener('click', _ => this.changeTaskStatus(event)))
+      })
+
       return codeHighlight
     }
   },
@@ -116,6 +119,8 @@ export default {
     this.editorEl.addEventListener('scroll', _ => this.scrollSync())
     this.editorEl.addEventListener('keydown', _ => this.syncInputContent(event))
     this.editorEl.addEventListener('input', _ => this.syncInputContent(event))
+
+    document.querySelectorAll('.task').forEach(el => el.addEventListener('click', _ => this.changeTaskStatus(event)))
   },
   methods: {
     getContent () {
@@ -151,77 +156,21 @@ export default {
           e.preventDefault()
         })
       }
+    },
+    changeTaskStatus (event) {
+      const status = event.target.textContent
+      const content = event.target.parentNode.getAttribute('data-slug')
+      const newContent = status.replace(/\[(x|\s|@|~)\]/, (match, status) => {
+        let newStatus = ''
+        if (status === ' ') newStatus = '[x]'
+        if (status === 'x') newStatus = '[@]'
+        if (status === '@') newStatus = '[~]'
+        if (status === '~') newStatus = '[ ]'
+        return content.replace(/\[.*\]/, newStatus)
+      })
+
+      this.content = this.content.replace(content, newContent)
     }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-  .note {
-    background: #fff;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    box-shadow: 0 0 0 1px var(--color-border);
-
-    --heading-height: 40px;
-  }
-
-  .month {
-    grid-column: span 3;
-  }
-
-  .today {
-    .heading {
-      background: var(--color-heading-highlight);
-    }
-  }
-
-  .heading {
-    border-bottom: 1px solid var(--color-border);
-    padding: 0 1rem;
-    height: var(--heading-height);
-    line-height: var(--heading-height);
-    font-weight: 600;
-    display: flex;
-    justify-content: space-between;
-    text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: .05em;
-  }
-
-  .editor {
-    position: absolute;
-    width: 100%;
-    height: calc(100% - var(--heading-height));
-    top: var(--heading-height);
-    border: 0;
-    resize: none;
-    background: none;
-    font: inherit;
-    line-height: inherit;
-    margin: 0;
-    padding: .5rem;
-    line-height: 1.5em;
-    color: var(--color-day-text);
-    white-space: pre-wrap;
-    word-wrap: break-word;
-  }
-
-  .highlight {
-    z-index: 2;
-    background: transparent;
-    pointer-events: none;
-    overflow-y: auto;
-  }
-
-  .textarea {
-    z-index: 1;
-    outline: none;
-    -webkit-text-fill-color: transparent;
-
-    &::selection {
-      background: #ffeaa9
-    }
-  }
-</style>

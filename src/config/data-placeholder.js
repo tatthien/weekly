@@ -1,6 +1,11 @@
 export default `# Todo
-\`[ ] Your open task.\`
-\`[x] The completed one.\`
+
+Using [x]it! format
+
+[ ] Open
+[@] Ongoing
+[x] Checked
+[~] Obsolete
 
 You can create a @tag or @another-tag like this.
 

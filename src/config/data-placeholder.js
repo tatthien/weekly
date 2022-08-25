@@ -1,11 +1,11 @@
-export default `# Todo
+export default `# Task
 
-Using [x]it! format
+Using [x]it! format. Click on the checkbox to change the task's status.
 
-[ ] Open
-[@] Ongoing
+[ ] This is an open task
+[@] !high Ongoing task
 [x] Checked
-[~] Obsolete
+[~] Obsolete with a @tag
 
 You can create a @tag or @another-tag like this.
 
@@ -23,4 +23,6 @@ _italic_
 1. First
 2. Second
 3. And the final
+
+[I'm clickable](https://week.thien.dev)
 `;

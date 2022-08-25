@@ -57,40 +57,46 @@ export default {
     highlightContent () {
       let codeHighlight = hljs.highlight('markdown', this.content).value + '\n\n'
 
-      // Strike thourgh
-      codeHighlight = codeHighlight.replace(
-        /~~(.*?)~~/g,
-        `<span class="strikethrough">~~$1~~</span>`
-      )
-
-      // Tag
-      codeHighlight = codeHighlight.replace(
-        /@([\w-_]+)/g,
-        `<span class="badge tag">@$1</span>`
-      )
-
       // xit task
+      // [ ] Open
+      // [X] Checked
+      // [@] Ongoing
+      // [~] Obsolete
       codeHighlight = codeHighlight.replace(/^\[(x|@|~|\s)\] (.*)/gm, (match, p1, p2) => {
         let type = ''
         if (p1 === ' ') type = 'open'
         if (p1 === 'x') type = 'checked'
         if (p1 === '~') type = 'obsolete'
         if (p1 === '@') type = 'ongoing'
-
-        return `<span class="task ${type}" data-slug="${match}"><span class="checkbox">[${p1}]</span><span> ${p2}</span></span>`
+        // Prevent highligh.js from highlight tag and priority
+        const dataSlug = match.replace(/@/g, '@-').replace(/!/g, '!-')
+        return `<span class="task ${type}" data-slug="${encodeURIComponent(dataSlug)}"><span class="checkbox">[${p1}]</span><span> ${p2}</span></span>`
       })
 
+      // Strike through
       codeHighlight = codeHighlight.replace(
-        /^(\^) (.*)/gm,
-        '<span class="event"><span class="hljs-bullet">$1</span> <span>$2</span></span>'
+        /~~(.*?)~~/g,
+        `<span class="strikethrough">~~$1~~</span>`
       )
 
-      // Priorities
+      // Tag. Eg: @x-tag
+      codeHighlight = codeHighlight.replace(
+        /@([\w-_]+)/g,
+        `<span class="badge tag">@$1</span>`
+      )
+
+      // Priorities. Eg: !High !Medium !Low
       codeHighlight = codeHighlight.replace(
         /!(high|medium|low)/gmi,
         (match, value) => {
           return `<span class="badge priority ${value.toLowerCase()}">${match}</span>`
         }
+      )
+
+      // Event. Eg: ^ Christmas holiday
+      codeHighlight = codeHighlight.replace(
+        /^(\^) (.*)/gm,
+        '<span class="event"><span class="hljs-bullet">$1</span> <span>$2</span></span>'
       )
 
       // Clickable link
@@ -160,7 +166,7 @@ export default {
     },
     changeTaskStatus (event) {
       const status = event.target.textContent
-      const content = event.target.parentNode.getAttribute('data-slug')
+      const content = decodeURIComponent(event.target.parentNode.getAttribute('data-slug')).replace(/@-/g, '@').replace(/!-/g, '!')
       const newContent = status.replace(/\[(x|\s|@|~)\]/, (match, status) => {
         let newStatus = ''
         if (status === ' ') newStatus = '[x]'

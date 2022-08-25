@@ -24,8 +24,7 @@
 .hljs-type,
 .hljs-params,
 .hljs-meta,
-.hljs-link,
-.hljs-code {
+.hljs-link {
   color: var(--color-quote);
 }
 
@@ -73,4 +72,8 @@
 .hljs-bullet,
 .hljs-section {
   font-weight: 700;
+}
+
+.hljs-code {
+  color: var(--color-priority-medium);
 }

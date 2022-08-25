@@ -56,13 +56,27 @@
     white-space: pre-wrap;
     word-wrap: break-word;
     font-size: 14px;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 0.5rem;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: #fff;
+      border-left: 1px solid var(--color-border);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--color-border);
+      border-radius: 50px;
+    }
   }
 
   .highlight {
     z-index: 2;
     background: transparent;
     pointer-events: none;
-    overflow-y: auto;
   }
 
   .textarea {

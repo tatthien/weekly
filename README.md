@@ -1,6 +1,7 @@
 # Bullet Journal
 
-It's a methodology to keep track of your stuff like tasks, events, notes by creating the bullets. I found that I love this method and easily adapt to it than other tools that I've tried like Trello, note-taking apps, to-do apps.
+It's a methodology to keep track of your stuff like tasks, events, notes by creating the bullets. I found that I love
+this method and easily adapt to it than other tools that I've tried like Trello, note-taking apps, to-do apps.
 
 <img width="1792" alt="demo" src="https://user-images.githubusercontent.com/72242664/186437039-2260c441-79d7-4a41-99a5-f0906f625e36.png">
 
@@ -52,8 +53,10 @@ yarn lint
 
 ## Thanks
 
-- I was inspired by the original one here [bastianallgeier/bulletjournal](https://github.com/bastianallgeier/bulletjournal)
-- Don't forget to give a shout out to @huytd with his amazing project [markd.one](https://github.com/huytd/markd.one). I've made some regex preferences from his project.
+- I was inspired by the original one here
+  [bastianallgeier/bulletjournal](https://github.com/bastianallgeier/bulletjournal)
+- Don't forget to give a shout out to @huytd with his amazing project [markd.one](https://github.com/huytd/markd.one).
+  I've made some regex preferences from his project.
 
 ## License
 

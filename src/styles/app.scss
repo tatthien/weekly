@@ -1,10 +1,10 @@
 :root {
   --transparent: rgba(0, 0, 0, 0);
-  --white: #ffffff;
-  --black: #000000;
+  --white: #fff;
+  --black: #000;
   --color-secondary: #9da3a7;
   --color-text: #2c3338;
-  --color-body-bg: #F6F7F7;
+  --color-body-bg: #f6f7f7;
   --color-border: #dcdcde;
   --color-priority-high: #d82f2f;
   --color-priority-medium: #ff9940;
@@ -16,11 +16,11 @@
   --color-link-bg: #ececec;
   --color-quote: #556069;
   --header-height: 40px;
-  --gap: 0.5rem;
+  --gap: .5rem;
 }
 
-@import './font-face.scss';
-@import './note.scss';
+@import "./font-face";
+@import "./note";
 
 html,
 body {
@@ -28,12 +28,12 @@ body {
 }
 
 body {
-  font-family: 'iA Writer MonoS', monospace;
   display: flex;
-  line-height: 1;
+  font-family: "iA Writer MonoS", monospace;
   font-size: 1rem;
-  background: var(--color-body-bg);
+  line-height: 1;
   color: var(--color-text);
+  background: var(--color-body-bg);
 }
 
 .invisible {
@@ -52,22 +52,22 @@ body {
 }
 
 .app-header {
-  height: var(--header-height);
-  width: 100%;
   position: fixed;
-  left: 0;
-  right: 0;
   top: 0;
-  background: #fff;
+  right: 0;
+  left: 0;
   z-index: 100;
+  width: 100%;
+  height: var(--header-height);
+  background: #fff;
   border-bottom: 1px solid var(--color-border);
 
   &__inner {
-    height: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.5rem 1rem;
+    height: 100%;
+    padding: .5rem 1rem;
   }
 
   nav {
@@ -82,15 +82,15 @@ body {
 }
 
 main {
-  margin-top: var(--header-height);
   width: 100%;
+  margin-top: var(--header-height);
 }
 
 .grid {
-  padding: var(--gap);
   display: grid;
-  grid-template-columns: repeat(6, minmax(200px, 1fr));
   grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(6, minmax(200px, 1fr));
   grid-gap: var(--gap);
   height: 100%;
+  padding: var(--gap);
 }

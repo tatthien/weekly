@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "format": "prettier --write \"**/*.{js,ts,vue,md,yaml}\""
+    "format": "prettier --write \"**/*.{js,ts,vue,md,yaml}\"",
+    "stylelint": "stylelint src/**/*.scss"
   },
   "dependencies": {
     "core-js": "^3.4.3",
@@ -29,6 +30,9 @@
     "prettier": "^2.7.1",
     "sass": "^1.23.7",
     "sass-loader": "^8.0.0",
+    "stylelint": "^14.11.0",
+    "stylelint-config-twbs-bootstrap": "^5.0.0",
+    "stylelint-scss": "^4.3.0",
     "vue-template-compiler": "^2.6.10"
   }
 }

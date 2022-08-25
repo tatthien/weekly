@@ -18,7 +18,7 @@
 
 /* Ocean Orange */
 .hljs-number,
-.hljs-built_in,
+.hljs-builtin,
 .hljs-builtin-name,
 .hljs-literal,
 .hljs-type,
@@ -30,7 +30,7 @@
 
 /* Ocean Yellow */
 .hljs-attribute {
-  color: var(--yellow-400)
+  color: var(--yellow-400);
 }
 
 /* Ocean Green */
@@ -55,10 +55,10 @@
 
 .hljs {
   display: block;
+  padding: .5em;
   overflow-x: auto;
-  background: #2b303b;
   color: #c0c5ce;
-  padding: 0.5em;
+  background: #2b303b;
 }
 
 .hljs-emphasis {
@@ -66,7 +66,7 @@
 }
 
 .hljs-strong {
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .hljs-bullet,

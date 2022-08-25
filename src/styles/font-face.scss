@@ -1,35 +1,27 @@
 @font-face {
   font-family: "iA Writer MonoS";
-  font-weight: 400;
   font-style: normal;
-  src: url("../assets/fonts/iAWriterMonoS-Regular.eot") format("embedded-opentype"),
-    url("../assets/fonts/iAWriterMonoS-Regular.woff2") format("woff2"),
-    url("../assets/fonts/iAWriterMonoS-Regular.woff") format("woff");
-}
-
-@font-face {
-  font-family: "iA Writer MonoS";
   font-weight: 400;
-  font-style: italic;
-  src: url("../assets/fonts/iAWriterMonoS-Italic.eot") format("embedded-opentype"),
-    url("../assets/fonts/iAWriterMonoS-Italic.woff2") format("woff2"),
-    url("../assets/fonts/iAWriterMonoS-Italic.woff") format("woff");
+  src: url("../assets/fonts/iAWriterMonoS-Regular.eot") format("embedded-opentype"), url("../assets/fonts/iAWriterMonoS-Regular.woff2") format("woff2"), url("../assets/fonts/iAWriterMonoS-Regular.woff") format("woff");
 }
 
 @font-face {
   font-family: "iA Writer MonoS";
-  font-weight: 700;
+  font-style: italic;
+  font-weight: 400;
+  src: url("../assets/fonts/iAWriterMonoS-Italic.eot") format("embedded-opentype"), url("../assets/fonts/iAWriterMonoS-Italic.woff2") format("woff2"), url("../assets/fonts/iAWriterMonoS-Italic.woff") format("woff");
+}
+
+@font-face {
+  font-family: "iA Writer MonoS";
   font-style: normal;
-  src: url("../assets/fonts/iAWriterMonoS-Bold.eot") format("embedded-opentype"),
-    url("../assets/fonts/iAWriterMonoS-Bold.woff2") format("woff2"),
-    url("../assets/fonts/iAWriterMonoS-Bold.woff") format("woff");
+  font-weight: 700;
+  src: url("../assets/fonts/iAWriterMonoS-Bold.eot") format("embedded-opentype"), url("../assets/fonts/iAWriterMonoS-Bold.woff2") format("woff2"), url("../assets/fonts/iAWriterMonoS-Bold.woff") format("woff");
 }
 
 @font-face {
   font-family: "iA Writer MonoS";
-  font-weight: 700;
   font-style: italic;
-  src: url("../assets/fonts/iAWriterMonoS-BoldItalic.eot") format("embedded-opentype"),
-    url("../assets/fonts/iAWriterMonoS-BoldItalic.woff2") format("woff2"),
-    url("../assets/fonts/iAWriterMonoS-BoldItalic.woff") format("woff");
+  font-weight: 700;
+  src: url("../assets/fonts/iAWriterMonoS-BoldItalic.eot") format("embedded-opentype"), url("../assets/fonts/iAWriterMonoS-BoldItalic.woff2") format("woff2"), url("../assets/fonts/iAWriterMonoS-BoldItalic.woff") format("woff");
 }

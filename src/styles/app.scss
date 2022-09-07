@@ -16,10 +16,16 @@
   --color-link-bg: #ececec;
   --color-quote: #556069;
   --header-height: 40px;
+	--color-button-primary: #151515;
+	--color-button-secondary: #bcbcbf;
+	--color-button-danger: #d82f2f;
+	--color-button-warning: #ff9940;
+	--color-button-ghost-hover: #f6f7f7;
   --gap: .5rem;
 }
 
 @import "./font-face";
+@import "./components";
 @import "./note";
 
 html,
@@ -31,7 +37,7 @@ body {
   display: flex;
   font-family: "iA Writer MonoS", monospace;
   font-size: 1rem;
-  line-height: 1;
+  line-height: 1.5;
   color: var(--color-text);
   background: var(--color-body-bg);
 }
@@ -76,9 +82,15 @@ body {
     }
 
     svg {
-      width: 16px;
+      width: 20px;
     }
   }
+
+	.user-avatar {
+		width: 32px;
+    height: auto;
+    border-radius: 50px;
+	}
 }
 
 main {
@@ -93,4 +105,30 @@ main {
   grid-gap: var(--gap);
   height: 100%;
   padding: var(--gap);
+}
+
+.dropdown {
+	position: relative;
+
+	&-menu {
+		position: absolute;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    min-width: 250px;
+    right: 0;
+    border-radius: 0.25rem;
+		font-size: 0.875rem;
+	}
+
+	&-menu-item {
+		padding: 0.75rem 1rem;
+		border-bottom: 1px solid var(--color-border);
+		cursor: pointer;
+		&:hover {
+			background-color: var(--color-button-ghost-hover);
+		}
+		&:last-child {
+			border-bottom: none;
+		}
+	}
 }

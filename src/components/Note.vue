@@ -11,7 +11,7 @@
 
 <script>
 import hljs from 'highlight.js';
-import dataPlaceholder from '../config/data-placeholder';
+import dataPlaceholder from '../utils/get-data-placeholder';
 
 const BRACKETS = new Map([
 	['[', ']'],

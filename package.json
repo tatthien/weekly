@@ -11,6 +11,8 @@
     "stylelint": "stylelint src/**/*.scss"
   },
   "dependencies": {
+    "@heroicons/vue": "^2.0.10",
+    "firebase": "^9.9.4",
     "highlight.js": "^11.6.0",
     "prettier": "^2.7.1",
     "vue": "^3.2.37"

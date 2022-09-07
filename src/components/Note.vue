@@ -5,7 +5,7 @@
 			<span :class="[!isToday ? 'secondary' : '']">{{ dateLabel }}</span>
 		</span>
 		<pre ref="highlight" class="editor highlight" v-html="highlightContent"></pre>
-		<textarea v-model="content" ref="editor" class="editor textarea" :id="id"></textarea>
+		<textarea :id="id" ref="editor" v-model="content" class="editor textarea"></textarea>
 	</label>
 </template>
 
@@ -20,7 +20,7 @@ const BRACKETS = new Map([
 ]);
 
 export default {
-	name: 'note',
+	name: 'Note',
 	props: {
 		id: {
 			type: String,

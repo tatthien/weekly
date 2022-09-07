@@ -16,8 +16,8 @@
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
-import Note from '@/components/Note.vue';
 import AppHeader from '@/components/AppHeader.vue';
+import Note from '@/components/Note.vue';
 const today = ref(new Date());
 const calendar = ref([
 	'Monday',
@@ -38,8 +38,12 @@ const mondayOfCurrentWeek = computed(() => {
 const list = computed(() => {
 	return calendar.value.map((item, index) => {
 		const date = index <= 6 ? new Date(new Date().setDate(mondayOfCurrentWeek.value.getDate() + index)) : null;
+		let id = item.toLowerCase().replace(/\s/gm, '_');
+		if (date !== null) {
+			id = `${item.toLowerCase().replace(/\s/gm, '_')}_${date.getDate()}_${date.getMonth() + 1}_${date.getFullYear()}`;
+		}
 		return {
-			id: item.toLowerCase().replace(/\s/gm, '_'),
+			id,
 			title: item,
 			date,
 		};

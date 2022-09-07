@@ -16,16 +16,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed } from 'vue';
 
 type PropType = {
-	disabled?: boolean
-	href?: string
-	type?: string
-	icon?: boolean
-	link?: boolean
-	variant?: 'primary' | 'secondary' | 'danger' | 'warning' | 'ghost'
-}
+	disabled?: boolean;
+	href?: string;
+	type?: string;
+	icon?: boolean;
+	link?: boolean;
+	variant?: 'primary' | 'secondary' | 'danger' | 'warning' | 'ghost';
+};
 
 const props = withDefaults(defineProps<PropType>(), {
 	disabled: false,
@@ -33,34 +33,34 @@ const props = withDefaults(defineProps<PropType>(), {
 	type: 'button',
 	icon: false,
 	link: false,
-	variant: 'primary'
-})
+	variant: 'primary',
+});
 
-const emit = defineEmits(['click'])
+const emit = defineEmits(['click']);
 
 const component = computed(() => {
-	if (props.disabled) return 'button'
-	if (props.href !== '') return 'a'
-	return 'button'
-})
+	if (props.disabled) return 'button';
+	if (props.href !== '') return 'a';
+	return 'button';
+});
 
 const additionalProps = computed(() => {
 	if (component.value === 'a') {
 		return {
 			href: props.href,
 			rel: 'noopener noreferrer',
-		}
+		};
 	}
 
-	return {}
-})
+	return {};
+});
 
-const commonClass = 'btn'
+const commonClass = 'btn';
 const variantClass = computed(() => {
-	return `btn-${props.variant}`
-})
+	return `btn-${props.variant}`;
+});
 
 const onClick = (event: MouseEvent) => {
-	emit('click', event)
-}
+	emit('click', event);
+};
 </script>

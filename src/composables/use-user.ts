@@ -1,35 +1,40 @@
-import { computed, watch } from 'vue'
-import { useLocalStorage } from "./use-local-storage";
+import { computed } from 'vue';
+import { useLocalStorage } from './use-local-storage';
+
+type AuthData = {
+	accessToken: string,
+	user: Record<string, any>
+}
 
 export function useUser() {
-	const authData = useLocalStorage('GET_WEEKLY_AUTH') // @TODO: make constant
+	const authData = useLocalStorage<AuthData | null>('GET_WEEKLY_AUTH'); // @TODO: make constant
 
 	const displayName = computed(() => {
 		if (!authData.value) {
-			return ''
+			return '';
 		}
 
-		return authData.value.user.displayName
-	})
+		return authData.value.user.displayName;
+	});
 
 	const photoURL = computed(() => {
 		if (!authData.value) {
-			return ''
+			return '';
 		}
 
-		return authData.value.user.photoURL
-	})
+		return authData.value.user.photoURL;
+	});
 
 	const isLoggedIn = computed(() => {
-		return !!authData.value?.accessToken
-	})
+		return !!authData.value?.accessToken;
+	});
 
-	function setAuthData(data: Record<string, any>) {
-		authData.value = data
+	function setAuthData(data: AuthData) {
+		authData.value = data;
 	}
 
 	function logOut() {
-		authData.value = null
+		authData.value = null;
 	}
 
 	return {
@@ -38,5 +43,5 @@ export function useUser() {
 		setAuthData,
 		logOut,
 		isLoggedIn,
-	}
+	};
 }

@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@heroicons/vue': ^2.0.10
+  '@types/lodash': ^4.14.184
   '@typescript-eslint/eslint-plugin': ^5.36.2
   '@vitejs/plugin-vue': ^3.1.0
   eslint: ^8.23.0
@@ -10,6 +11,7 @@ specifiers:
   eslint-plugin-vue: ^9.4.0
   firebase: ^9.9.4
   highlight.js: ^11.6.0
+  lodash: ^4.17.21
   prettier: ^2.7.1
   sass: ^1.54.8
   typescript: ^4.6.4
@@ -21,10 +23,12 @@ dependencies:
   '@heroicons/vue': 2.0.10_vue@3.2.38
   firebase: 9.9.4
   highlight.js: 11.6.0
+  lodash: 4.17.21
   prettier: 2.7.1
   vue: 3.2.38
 
 devDependencies:
+  '@types/lodash': 4.14.184
   '@typescript-eslint/eslint-plugin': 5.36.2_iurrlxgqcgk5svigzxakafpeuu
   '@vitejs/plugin-vue': 3.1.0_vite@3.1.0+vue@3.2.38
   eslint: 8.23.0
@@ -684,6 +688,10 @@ packages:
 
   /@types/json-schema/7.0.11:
     resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
+    dev: true
+
+  /@types/lodash/4.14.184:
+    resolution: {integrity: sha512-RoZphVtHbxPZizt4IcILciSWiC6dcn+eZ8oX9IWEYfDMcocdd42f7NPI6fQj+6zI8y4E0L7gu2pcZKLGTRaV9Q==}
     dev: true
 
   /@types/long/4.0.2:
@@ -1848,7 +1856,6 @@ packages:
 
   /lodash/4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-    dev: true
 
   /long/4.0.0:
     resolution: {integrity: sha512-XsP+KhQif4bjX1kbuSiySJFNAehNxgLb6hPRGJ9QsUr8ajHkuXGdrHmFUTUUXhDwVX2R5bY4JNZEwbUiMhV+MA==}

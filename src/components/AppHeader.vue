@@ -1,25 +1,27 @@
 <script lang="ts" setup>
-	import { ref } from 'vue'
-	import firebaseApp from '../utils/get-firebase-app'
-	import { getAuth, signInWithPopup  ,GoogleAuthProvider } from 'firebase/auth'
-	import { UserIcon } from '@heroicons/vue/24/outline'
-	import WButton from '@/components/WButton.vue'
-	import { useUser } from '../composables/use-user'
-	const { setAuthData, logOut, isLoggedIn, displayName, photoURL } = useUser()
-	const showDropdown = ref(false)
-	const provider = new GoogleAuthProvider()
-	const auth = getAuth(firebaseApp)
-	function logInWithGoogle() {
-		signInWithPopup(auth, provider).then((result) => {
-			const credential = GoogleAuthProvider.credentialFromResult(result)
+import { ref } from 'vue';
+import firebaseApp from '../utils/get-firebase-app';
+import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { UserIcon } from '@heroicons/vue/24/outline';
+import WButton from '@/components/WButton.vue';
+import { useUser } from '../composables/use-user';
+const { setAuthData, logOut, isLoggedIn, displayName, photoURL } = useUser();
+const showDropdown = ref(false);
+const provider = new GoogleAuthProvider();
+const auth = getAuth(firebaseApp);
+function logInWithGoogle() {
+	signInWithPopup(auth, provider)
+		.then((result) => {
+			const credential = GoogleAuthProvider.credentialFromResult(result);
 			setAuthData({
-				accessToken: credential?.accessToken,
-				user: result.user
-			})
-		}).catch((error) => {
-			console.log(error)
+				accessToken: credential?.accessToken ?? '',
+				user: result.user,
+			});
 		})
-	}
+		.catch((error) => {
+			// handle error
+		});
+}
 </script>
 <template>
 	<header class="app-header">
@@ -41,18 +43,22 @@
 							<WButton variant="ghost" icon @click="showDropdown = !showDropdown">
 								<img :src="photoURL" :alt="displayName" class="user-avatar" />
 							</WButton>
-							<div class="dropdown-menu" v-if="showDropdown" role="menu">
+							<div v-if="showDropdown" class="dropdown-menu" role="menu">
 								<div class="dropdown-menu-item">
 									<div>Log in as</div>
-									<div><strong>{{ displayName }}</strong></div>
+									<div>
+										<strong>{{ displayName }}</strong>
+									</div>
 								</div>
-								<div class="dropdown-menu-item" @click="logOut"><WButton link tabindex="-1" role="menuitem">Logout</WButton></div>
+								<div class="dropdown-menu-item" @click="logOut">
+									<WButton link tabindex="-1" role="menuitem">Logout</WButton>
+								</div>
 							</div>
 						</div>
 					</div>
 					<template v-else>
-						<WButton @click="logInWithGoogle" variant="ghost" icon title="Log in with Google">
-							<UserIcon/>
+						<WButton variant="ghost" icon title="Log in with Google" @click="logInWithGoogle">
+							<UserIcon />
 						</WButton>
 					</template>
 				</nav>

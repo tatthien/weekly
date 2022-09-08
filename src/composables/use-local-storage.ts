@@ -61,6 +61,7 @@ export function useLocalStorage<T extends string | number | boolean | object | n
 
 	function read(key: string) {
 		const rawData = window.localStorage.getItem(key);
+		if (rawData === null) return rawData;
 		return serializer.read(rawData || '');
 	}
 

@@ -2,11 +2,11 @@ import { computed } from 'vue';
 import { useLocalStorage } from './use-local-storage';
 
 type AuthData = {
-	accessToken: string,
-	user: Record<string, any>
-}
+	accessToken: string;
+	user: Record<string, any>;
+};
 
-export function useUser() {
+export default function useUser() {
 	const authData = useLocalStorage<AuthData | null>('GET_WEEKLY_AUTH'); // @TODO: make constant
 
 	const displayName = computed(() => {
@@ -33,7 +33,7 @@ export function useUser() {
 		authData.value = data;
 	}
 
-	function logOut() {
+	function clearAuthData() {
 		authData.value = null;
 	}
 
@@ -41,7 +41,7 @@ export function useUser() {
 		displayName,
 		photoURL,
 		setAuthData,
-		logOut,
+		clearAuthData,
 		isLoggedIn,
 	};
 }

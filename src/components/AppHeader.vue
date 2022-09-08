@@ -1,14 +1,16 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
-import firebaseApp from '../utils/get-firebase-app';
-import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { signInWithPopup, signOut, GoogleAuthProvider } from 'firebase/auth';
+import auth from '../utils/get-firebase-auth';
 import { UserIcon } from '@heroicons/vue/24/outline';
 import WButton from '@/components/WButton.vue';
-import { useUser } from '../composables/use-user';
-const { setAuthData, logOut, isLoggedIn, displayName, photoURL } = useUser();
+import useUser from '../composables/use-user';
+import useLogs from '../composables/use-logs';
+
+const { setAuthData, clearAuthData, isLoggedIn, displayName, photoURL } = useUser();
+const { logs } = useLogs();
 const showDropdown = ref(false);
 const provider = new GoogleAuthProvider();
-const auth = getAuth(firebaseApp);
 function logInWithGoogle() {
 	signInWithPopup(auth, provider)
 		.then((result) => {
@@ -19,8 +21,14 @@ function logInWithGoogle() {
 			});
 		})
 		.catch((error) => {
-			// handle error
+			throw Error(String(error));
 		});
+}
+
+function logOut() {
+	signOut(auth).then(() => {
+		clearAuthData();
+	});
 }
 </script>
 <template>
@@ -39,6 +47,9 @@ function logInWithGoogle() {
 			<div class="right">
 				<nav>
 					<div v-if="isLoggedIn">
+						<span v-if="logs.length" class="logs">
+							{{ logs[0] }}
+						</span>
 						<div class="dropdown">
 							<WButton variant="ghost" icon @click="showDropdown = !showDropdown">
 								<img :src="photoURL" :alt="displayName" class="user-avatar" />

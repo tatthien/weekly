@@ -2,7 +2,7 @@
 	<label :for="id" :class="noteClasses">
 		<span class="heading">
 			<span>{{ title }}</span>
-			<span :class="[!isToday ? 'secondary' : '']">{{ dateLabel }}</span>
+			<span :class="[!isToday ? 'secondary' : '']">{{ props.dateLabel }}</span>
 		</span>
 		<pre ref="highlightEl" class="editor highlight" v-html="highlightContent"></pre>
 		<textarea :id="id" ref="editorEl" v-model="content" class="editor textarea"></textarea>
@@ -10,11 +10,16 @@
 </template>
 
 <script lang="ts" setup>
+import { format } from 'date-fns';
 import hljs from 'highlight.js';
-import { setDoc, doc } from 'firebase/firestore';
-import db from '../utils/get-db';
+import { doc, getDocs, setDoc, collection, query, where } from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
+import db from '../utils/get-firebase-db';
+import auth from '../utils/get-firebase-auth';
 import { ref, computed, nextTick, onMounted } from 'vue';
-import debounce from 'lodash/debounce'
+import debounce from 'lodash/debounce';
+import useLogs from '../composables/use-logs';
+const { addLog } = useLogs();
 
 const BRACKETS = new Map([
 	['[', ']'],
@@ -26,7 +31,9 @@ type PropsType = {
 	id: string;
 	index: number;
 	title?: string;
-	date?: Date;
+	dateLabel?: string;
+	weekDay: string;
+	weekDate?: Date;
 };
 const props = defineProps<PropsType>();
 const editorEl = ref();
@@ -38,9 +45,6 @@ const isMonth = computed(() => {
 const isToday = computed(() => {
 	return today.value.getDay() === props.index + 1;
 });
-const dateLabel = computed(() => {
-	return props.date ? `${props.date.getDate()}.${today.value.getMonth() + 1}` : '';
-});
 const noteClasses = computed(() => {
 	let classes = ['note', props.id.split('_')[0]];
 	if (isMonth.value) classes.push('month');
@@ -48,8 +52,9 @@ const noteClasses = computed(() => {
 	return classes;
 });
 const content = ref('');
+
 const highlightContent = computed(() => {
-	let codeHighlight = hljs.highlight('markdown', content.value).value + '\n\n';
+	let codeHighlight = hljs.highlight(content.value, { language: 'markdown' }).value + '\n\n';
 
 	codeHighlight = codeHighlight.replace(/^\[(x|@|~|\s)\] (.*)/gm, (match, p1, p2) => {
 		let type = '';
@@ -59,7 +64,9 @@ const highlightContent = computed(() => {
 		if (p1 === '@') type = 'ongoing';
 		// Prevent highligh.js from highlight tag and priority
 		const dataSlug = match.replace(/@/g, '@-').replace(/!/g, '!-');
-		return `<span class="task ${type}"><span class="checkbox" data-slug="${encodeURIComponent(dataSlug)}">[${p1}]</span><span> ${p2}</span></span>`;
+		return `<span class="task ${type}"><span class="checkbox" data-slug="${encodeURIComponent(
+			dataSlug
+		)}">[${p1}]</span><span> ${p2}</span></span>`;
 	});
 
 	// Strike through
@@ -98,16 +105,25 @@ const highlightContent = computed(() => {
 	return codeHighlight;
 });
 
-const autoSaveContent = debounce(async () => {
-	try {
-		await setDoc(doc(db, `plans/${props.id}`), {
+const autoSaveContent = debounce(() => {
+	onAuthStateChanged(auth, async (user) => {
+		const data = {
 			content: content.value,
-		});
-		console.log('saved')
-	} catch (error) {
-		// handle error
-	}
-}, 500)
+			date: props.weekDate ? format(props.weekDate, 'dd_MM_yyyy') : props.weekDay,
+		};
+
+		if (user) {
+			try {
+				await setDoc(doc(db, `${import.meta.env.VITE_DB_NAME ?? 'dev'}/${user.uid}/plans/${props.id}`), data);
+				addLog(`Saved at ${Date.now()}`);
+			} catch (error) {
+				throw Error(String(error));
+			}
+		} else {
+			// @TODO: local storage
+		}
+	});
+}, 500);
 
 onMounted(() => {
 	editorEl.value.addEventListener('scroll', () => scrollSync());
@@ -117,25 +133,44 @@ onMounted(() => {
 	document
 		.querySelectorAll('.task')
 		.forEach((el) => el.addEventListener('click', (event: Event) => changeTaskStatus(event)));
-})
+});
+
+// Read data from firebase or local storage
+onAuthStateChanged(auth, async (user) => {
+	if (user) {
+		const q = query(
+			collection(db, `${import.meta.env.VITE_DB_NAME}/${user.uid}/plans`),
+			where('date', '==', props.weekDate ? format(props.weekDate, 'dd_MM_yyyy') : props.weekDay)
+		);
+		const querySnap = await getDocs(q);
+		querySnap.forEach((doc) => {
+			content.value = doc.data().content;
+		});
+	} else {
+		// @TODO: local storage
+	}
+});
 
 function changeTaskStatus(event: Event) {
-	const targetEl = event.target as HTMLElement
-	if (targetEl === null) return
+	const targetEl = event.target as HTMLElement;
+	if (targetEl === null) return;
 	const status = targetEl.textContent;
 	const data = decodeURIComponent(targetEl.getAttribute('data-slug') || '')
 		.replace(/@-/g, '@')
 		.replace(/!-/g, '!');
-	const newContent = status ? status.replace(/\[(x|\s|@|~)\]/, (match: any, status: any) => {
-		let newStatus = '';
-		if (status === ' ') newStatus = '[x]';
-		if (status === 'x') newStatus = '[@]';
-		if (status === '@') newStatus = '[~]';
-		if (status === '~') newStatus = '[ ]';
-		return data.replace(/\[.*\]/, newStatus);
-	}) : '';
+	const newContent = status
+		? status.replace(/\[(x|\s|@|~)\]/, (match: any, status: any) => {
+				let newStatus = '';
+				if (status === ' ') newStatus = '[x]';
+				if (status === 'x') newStatus = '[@]';
+				if (status === '@') newStatus = '[~]';
+				if (status === '~') newStatus = '[ ]';
+				return data.replace(/\[.*\]/, newStatus);
+		  })
+		: '';
 
 	content.value = content.value.replace(data, newContent);
+	autoSaveContent();
 }
 
 function scrollSync() {

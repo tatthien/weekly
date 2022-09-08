@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@heroicons/vue": "^2.0.10",
+    "date-fns": "^2.29.2",
     "firebase": "^9.9.4",
     "highlight.js": "^11.6.0",
     "lodash": "^4.17.21",

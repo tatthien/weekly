@@ -64,8 +64,8 @@ function logOut() {
 				<nav>
 					<div v-if="isLoggedIn">
 						<div class="dropdown">
-							<WButton variant="ghost" icon @click="showDropdown = !showDropdown">
-								<img :src="photoURL" :alt="displayName" class="user-avatar" />
+							<WButton class="user-avatar" variant="ghost" icon @click="showDropdown = !showDropdown">
+								<img :src="photoURL" :alt="displayName" />
 							</WButton>
 							<Transition name="slide">
 								<div v-if="showDropdown" class="dropdown-menu" role="menu">

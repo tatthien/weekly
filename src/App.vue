@@ -39,8 +39,8 @@ const mondayOfCurrentWeek = computed(() => {
 	const monday = new Date(today.value.setDate(first));
 	return monday;
 });
-const list = ref(
-	calendar.value.map((item, index) => {
+const list = computed(() => {
+	return calendar.value.map((item, index) => {
 		const weekDateTimestamp = new Date().setDate(mondayOfCurrentWeek.value.getDate() + index);
 		const weekDate = index <= 6 ? new Date(weekDateTimestamp) : null;
 		let weekDay = item.toLowerCase().replace(/\s/gm, '_');
@@ -55,6 +55,6 @@ const list = ref(
 			title: item,
 			dateLabel,
 		};
-	})
-);
+	});
+});
 </script>

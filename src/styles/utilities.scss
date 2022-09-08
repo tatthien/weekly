@@ -1,0 +1,6 @@
+$font-weight: ("normal": 400, "semibold": 600, "bold": 700);
+@each $k, $v in $font-weight {
+  .font-#{$k} {
+    font-weight: $v;
+  }
+}

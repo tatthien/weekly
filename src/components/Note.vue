@@ -18,8 +18,7 @@ import db from '../utils/get-firebase-db';
 import auth from '../utils/get-firebase-auth';
 import { ref, computed, nextTick, onMounted } from 'vue';
 import debounce from 'lodash/debounce';
-import useLogs from '../composables/use-logs';
-const { addLog } = useLogs();
+import { addLog } from '../composables/use-logs';
 
 const BRACKETS = new Map([
 	['[', ']'],
@@ -114,8 +113,8 @@ const autoSaveContent = debounce(() => {
 
 		if (user) {
 			try {
-				await setDoc(doc(db, `${import.meta.env.VITE_DB_NAME ?? 'dev'}/${user.uid}/plans/${props.id}`), data);
-				addLog(`Saved at ${Date.now()}`);
+				await setDoc(doc(db, `${import.meta.env.VITE_DB_NAME}/${user.uid}/plans/${props.id}`), data);
+				addLog(`🎉 Saved at ${format(new Date(), 'dd-MM-yyyy H:ii:ss')}`);
 			} catch (error) {
 				throw Error(String(error));
 			}

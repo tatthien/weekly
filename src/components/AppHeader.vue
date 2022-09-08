@@ -1,16 +1,35 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { signInWithPopup, signOut, GoogleAuthProvider } from 'firebase/auth';
+import { ref, watch } from 'vue';
+import { format } from 'date-fns';
+import { signInWithPopup, signOut, GoogleAuthProvider, onAuthStateChanged } from 'firebase/auth';
 import auth from '../utils/get-firebase-auth';
 import { UserIcon } from '@heroicons/vue/24/outline';
 import WButton from '@/components/WButton.vue';
 import useUser from '../composables/use-user';
-import useLogs from '../composables/use-logs';
+import { latestLog, addLog } from '../composables/use-logs';
+
+const heading = format(new Date(), 'MMMM yyyy');
+const showDropdown = ref(false);
+const showLogs = ref(false);
+
+const triggerLogs = () => {
+	showLogs.value = true;
+	setTimeout(() => (showLogs.value = false), 3000);
+};
+
+watch(latestLog, () => {
+	triggerLogs();
+});
 
 const { setAuthData, clearAuthData, isLoggedIn, displayName, photoURL } = useUser();
-const { logs } = useLogs();
-const showDropdown = ref(false);
 const provider = new GoogleAuthProvider();
+
+onAuthStateChanged(auth, (user) => {
+	if (user) {
+		addLog(`Hi ${user.displayName}!`);
+	}
+});
+
 function logInWithGoogle() {
 	signInWithPopup(auth, provider)
 		.then((result) => {
@@ -35,36 +54,32 @@ function logOut() {
 	<header class="app-header">
 		<div class="app-header__inner">
 			<div class="left">
-				<a href="/">
-					<svg width="60" viewBox="0 0 511 155" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path
-							d="M158.944 141.11h.396l34.452-128.106-19.404-1.98.594-3.564h40.194l-.396 3.564-15.444 1.98-38.214 137.61-27.72 3.96L112.018 72.8l-30.096 77.814-29.106 3.96L15.988 13.202.148 11.024.544 7.46h66.132l-.396 3.564-18.216 2.178L80.14 141.11h.396l29.304-76.626-13.86-53.856 30.096-5.742 32.868 136.224ZM257.534 46.664c12.012 0 20.658 2.31 25.938 6.93 5.412 4.62 8.118 10.56 8.118 17.82 0 5.676-1.32 10.296-3.96 13.86-2.508 3.432-5.808 6.138-9.9 8.118a70.317 70.317 0 0 1-12.87 4.356 379.637 379.637 0 0 0-12.474 2.772l-19.602 4.158c.132 10.692 1.056 19.272 2.772 25.74 1.848 6.336 4.488 10.956 7.92 13.86 3.564 2.772 7.854 4.158 12.87 4.158 3.828 0 7.458-.792 10.89-2.376 3.432-1.716 6.666-3.96 9.702-6.732 3.168-2.772 6.138-5.874 8.91-9.306l2.178 1.98c-.924 1.32-2.442 3.234-4.554 5.742-1.98 2.508-4.686 5.082-8.118 7.722-3.3 2.508-7.326 4.686-12.078 6.534-4.62 1.848-10.032 2.772-16.236 2.772-10.032 0-18.48-1.914-25.344-5.742-6.732-3.96-11.814-9.438-15.246-16.434-3.3-7.128-4.95-15.444-4.95-24.948 0-12.012 2.244-22.572 6.732-31.68 4.62-9.24 11.088-16.434 19.404-21.582 8.448-5.148 18.414-7.722 29.898-7.722Zm8.118 23.166c0-3.96-.33-7.392-.99-10.296-.66-2.904-1.782-5.214-3.366-6.93-1.452-1.716-3.696-2.574-6.732-2.574-4.62 0-8.448 1.98-11.484 5.94-3.036 3.96-5.412 9.768-7.128 17.424-1.716 7.524-2.772 16.764-3.168 27.72l14.652-3.564c4.092-.924 7.458-2.31 10.098-4.158 2.772-1.848 4.818-4.554 6.138-8.118 1.32-3.696 1.98-8.844 1.98-15.444ZM360.015 46.664c12.012 0 20.658 2.31 25.938 6.93 5.412 4.62 8.118 10.56 8.118 17.82 0 5.676-1.32 10.296-3.96 13.86-2.508 3.432-5.808 6.138-9.9 8.118a70.317 70.317 0 0 1-12.87 4.356 379.637 379.637 0 0 0-12.474 2.772l-19.602 4.158c.132 10.692 1.056 19.272 2.772 25.74 1.848 6.336 4.488 10.956 7.92 13.86 3.564 2.772 7.854 4.158 12.87 4.158 3.828 0 7.458-.792 10.89-2.376 3.432-1.716 6.666-3.96 9.702-6.732 3.168-2.772 6.138-5.874 8.91-9.306l2.178 1.98c-.924 1.32-2.442 3.234-4.554 5.742-1.98 2.508-4.686 5.082-8.118 7.722-3.3 2.508-7.326 4.686-12.078 6.534-4.62 1.848-10.032 2.772-16.236 2.772-10.032 0-18.48-1.914-25.344-5.742-6.732-3.96-11.814-9.438-15.246-16.434-3.3-7.128-4.95-15.444-4.95-24.948 0-12.012 2.244-22.572 6.732-31.68 4.62-9.24 11.088-16.434 19.404-21.582 8.448-5.148 18.414-7.722 29.898-7.722Zm8.118 23.166c0-3.96-.33-7.392-.99-10.296-.66-2.904-1.782-5.214-3.366-6.93-1.452-1.716-3.696-2.574-6.732-2.574-4.62 0-8.448 1.98-11.484 5.94-3.036 3.96-5.412 9.768-7.128 17.424-1.716 7.524-2.772 16.764-3.168 27.72l14.652-3.564c4.092-.924 7.458-2.31 10.098-4.158 2.772-1.848 4.818-4.554 6.138-8.118 1.32-3.696 1.98-8.844 1.98-15.444ZM416.412 7.856 398.592 3.5l.396-3.366h43.164l1.98 1.98-3.762 92.268c5.808-1.32 11.088-2.904 15.84-4.752 4.752-1.848 9.768-4.29 15.048-7.326 4.62-2.64 7.392-5.412 8.316-8.316 1.056-3.036-.132-5.61-3.564-7.722l-6.138-3.96c.792-4.62 2.574-8.382 5.346-11.286 2.772-2.904 6.6-4.356 11.484-4.356 5.016 0 8.646 1.518 10.89 4.554 2.244 2.904 3.366 6.006 3.366 9.306 0 3.432-1.188 6.93-3.564 10.494-2.244 3.432-6.204 6.996-11.88 10.692a358.92 358.92 0 0 1-7.326 4.356c-2.508 1.32-5.28 2.772-8.316 4.356l19.404 39.006c2.64 5.148 4.884 8.712 6.732 10.692 1.848 1.98 4.026 2.97 6.534 2.97 1.98 0 3.828-.264 5.544-.792 1.716-.528 3.498-1.254 5.346-2.178l1.584 2.376c-1.32 1.32-3.366 2.97-6.138 4.95-2.772 1.848-6.006 3.498-9.702 4.95-3.696 1.584-7.524 2.376-11.484 2.376-6.072 0-10.956-1.386-14.652-4.158-3.564-2.904-6.732-7.326-9.504-13.266l-17.424-38.412-3.168.792-3.168.792-1.98 51.48h-27.72l6.336-144.144Z"
-							fill="#000"
-						/>
-					</svg>
-				</a>
+				<span class="font-bold">{{ heading }}</span>
 			</div>
 			<div class="right">
+				<Transition name="slide">
+					<span v-if="showLogs" class="app-logs">{{ latestLog }}</span>
+				</Transition>
+
 				<nav>
 					<div v-if="isLoggedIn">
-						<span v-if="logs.length" class="logs">
-							{{ logs[0] }}
-						</span>
 						<div class="dropdown">
 							<WButton variant="ghost" icon @click="showDropdown = !showDropdown">
 								<img :src="photoURL" :alt="displayName" class="user-avatar" />
 							</WButton>
-							<div v-if="showDropdown" class="dropdown-menu" role="menu">
-								<div class="dropdown-menu-item">
-									<div>Log in as</div>
-									<div>
-										<strong>{{ displayName }}</strong>
+							<Transition name="slide">
+								<div v-if="showDropdown" class="dropdown-menu" role="menu">
+									<div class="dropdown-menu-item">
+										<div>Log in as</div>
+										<div>
+											<strong>{{ displayName }}</strong>
+										</div>
+									</div>
+									<div class="dropdown-menu-item" @click="logOut">
+										<WButton link tabindex="-1" role="menuitem">Logout</WButton>
 									</div>
 								</div>
-								<div class="dropdown-menu-item" @click="logOut">
-									<WButton link tabindex="-1" role="menuitem">Logout</WButton>
-								</div>
-							</div>
+							</Transition>
 						</div>
 					</div>
 					<template v-else>
@@ -77,3 +92,16 @@ function logOut() {
 		</div>
 	</header>
 </template>
+
+<style scoped>
+.slide-enter-active,
+.slide-leave-active {
+	transition: all 0.3s cubic-bezier(0.85, 0, 0.56, 0.69);
+}
+
+.slide-enter-from,
+.slide-leave-to {
+	transform: translateY(10px);
+	opacity: 0;
+}
+</style>

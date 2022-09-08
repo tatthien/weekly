@@ -16,15 +16,19 @@
   --color-link-bg: #ececec;
   --color-quote: #556069;
   --header-height: 40px;
-	--color-button-primary: #151515;
-	--color-button-secondary: #bcbcbf;
-	--color-button-danger: #d82f2f;
-	--color-button-warning: #ff9940;
-	--color-button-ghost-hover: #f6f7f7;
+  --color-button-primary: #151515;
+  --color-button-secondary: #bcbcbf;
+  --color-button-danger: #d82f2f;
+  --color-button-warning: #ff9940;
+  --color-button-ghost-hover: #f6f7f7;
   --gap: .5rem;
+  --border-radius: .5rem;
+  --font-mono: "iA Writer MonoS", monospace;
+  --font-sans: "Inter var experimental", "Inter var", -apple-system, blinkmacsystemfont, "Segoe UI", roboto, oxygen, ubuntu, cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
 @import "./font-face";
+@import "./utilities";
 @import "./components";
 @import "./note";
 
@@ -35,7 +39,7 @@ body {
 
 body {
   display: flex;
-  font-family: "iA Writer MonoS", monospace;
+  font-family: var(--font-sans);
   font-size: 1rem;
   line-height: 1.5;
   color: var(--color-text);
@@ -86,11 +90,22 @@ body {
     }
   }
 
-	.user-avatar {
-		width: 32px;
+  .user-avatar {
+    width: 32px;
     height: auto;
     border-radius: 50px;
-	}
+  }
+}
+
+.right {
+  display: flex;
+  align-items: center;
+}
+
+.app-logs {
+  margin: 0 .5rem;
+  font-size: .75rem;
+  color: var(--color-secondary);
 }
 
 main {
@@ -99,45 +114,50 @@ main {
 }
 
 .app-loading {
-	width: 100%;
-	height: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: .875rem;
 }
 
 .grid {
   display: grid;
   grid-template-rows: repeat(3, 1fr);
-  grid-template-columns: repeat(6, minmax(200px, 1fr));
+  grid-template-columns: repeat(6, minmax(300px, 1fr));
   grid-gap: var(--gap);
   height: 100%;
   padding: var(--gap);
+
+  @media screen and (min-width: 1024px) {
+    grid-template-columns: repeat(6, minmax(200px, 1fr));
+  }
 }
 
 .dropdown {
-	position: relative;
+  position: relative;
 
-	&-menu {
-		position: absolute;
+  &-menu {
+    position: absolute;
+    right: 0;
+    min-width: 250px;
+    overflow: hidden;
+    font-size: .875rem;
     background: #fff;
     border: 1px solid var(--color-border);
-    min-width: 250px;
-    right: 0;
-    border-radius: 0.25rem;
-		font-size: 0.875rem;
-	}
+    border-radius: var(--border-radius);
+  }
 
-	&-menu-item {
-		padding: 0.75rem 1rem;
-		border-bottom: 1px solid var(--color-border);
-		cursor: pointer;
-		&:hover {
-			background-color: var(--color-button-ghost-hover);
-		}
-		&:last-child {
-			border-bottom: none;
-		}
-	}
+  &-menu-item {
+    padding: .75rem 1rem;
+    cursor: pointer;
+    border-bottom: 1px solid var(--color-border);
+    &:hover {
+      background-color: var(--color-button-ghost-hover);
+    }
+    &:last-child {
+      border-bottom: none;
+    }
+  }
 }

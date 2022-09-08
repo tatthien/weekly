@@ -1,48 +1,48 @@
 .btn {
-	display: inline-flex;
-	outline: none;
-	border: none;
-	cursor: pointer;
-	padding: 0.25rem 1rem;
-	border-radius: 0.25rem;
-	font-size: 0.875rem;
-	text-align: center;
+  display: inline-flex;
+  padding: .25rem 1rem;
+  font-size: .875rem;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  border-radius: .25rem;
+  outline: none;
 
-	&-primary {
-		background: var(--color-button-primary);
-		color: #fff;
-	}
+  &-primary {
+    color: #fff;
+    background: var(--color-button-primary);
+  }
 
-	&-secondary {
-		background: var(--color-button-secondary);
-	}
+  &-secondary {
+    background: var(--color-button-secondary);
+  }
 
-	&-danger {
-		background: var(--color-button-danger);
-		color: #fff;
-	}
+  &-danger {
+    color: #fff;
+    background: var(--color-button-danger);
+  }
 
-	&-warning {
-		background: var(--color-button-warning);
-	}
+  &-warning {
+    background: var(--color-button-warning);
+  }
 
-	&-ghost {
-		background: transparent;
-		padding: 0.25rem 0.25rem;
-		&:hover {
-			background: var(--color-button-ghost-hover);
-		}
-	}
+  &-ghost {
+    padding: .25rem;
+    background: transparent;
+    &:hover {
+      background: var(--color-button-ghost-hover);
+    }
+  }
 
-	&-icon {
-		span {
-			font-size: 0;
-		}
-	}
+  &-icon {
+    span {
+      font-size: 0;
+    }
+  }
 
-	&-link {
-		padding: 0;
-		background: transparent;
-		color: inherit;
-	}
+  &-link {
+    padding: 0;
+    color: inherit;
+    background: transparent;
+  }
 }

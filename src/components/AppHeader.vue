@@ -1,14 +1,16 @@
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { format } from 'date-fns';
 import { signInWithPopup, signOut, GoogleAuthProvider, onAuthStateChanged } from 'firebase/auth';
 import auth from '../utils/get-firebase-auth';
-import { UserIcon } from '@heroicons/vue/24/outline';
+import { UserIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/24/outline';
 import WButton from '@/components/WButton.vue';
 import useUser from '../composables/use-user';
 import { latestLog, addLog } from '../composables/use-logs';
+import useCalendar from '../composables/use-calendar';
 
-const heading = format(new Date(), 'MMMM yyyy');
+const { nextWeek, prevWeek, firstDateOfWeek } = useCalendar();
+const heading = computed(() => format(firstDateOfWeek.value, 'MMMM yyyy'));
 const showDropdown = ref(false);
 const showLogs = ref(false);
 
@@ -54,6 +56,14 @@ function logOut() {
 	<header class="app-header">
 		<div class="app-header__inner">
 			<div class="left">
+				<div>
+					<WButton variant="ghost" icon class="mr-2" @click="prevWeek">
+						<ChevronLeftIcon />
+					</WButton>
+					<WButton variant="ghost" icon class="mr-2" @click="nextWeek">
+						<ChevronRightIcon />
+					</WButton>
+				</div>
 				<span class="font-bold">{{ heading }}</span>
 			</div>
 			<div class="right">

@@ -4,3 +4,48 @@ $font-weight: ("normal": 400, "semibold": 600, "bold": 700);
     font-weight: $v;
   }
 }
+
+$space: (
+  "1": .25rem,
+  "2": .5rem,
+  "3": .75rem,
+  "4": 1rem,
+);
+
+@each $k, $v in $space {
+  .ml-#{$k} {
+    margin-left: $v;
+  }
+
+  .mr-#{$k} {
+    margin-right: $v;
+  }
+
+  .my-#{$k} {
+    margin-top: $v;
+    margin-bottom: $v;
+  }
+
+  .mx-#{$k} {
+    margin-right: $v;
+    margin-left: $v;
+  }
+
+  .pl-#{$k} {
+    padding-left: $v;
+  }
+
+  .pr-#{$k} {
+    padding-right: $v;
+  }
+
+  .py-#{$k} {
+    padding-top: $v;
+    padding-bottom: $v;
+  }
+
+  .px-#{$k} {
+    padding-right: $v;
+    padding-left: $v;
+  }
+}

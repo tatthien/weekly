@@ -27,7 +27,6 @@
   }
 
   &-ghost {
-    padding: .25rem;
     background: transparent;
     &:hover {
       background: var(--color-button-ghost-hover);
@@ -35,8 +34,14 @@
   }
 
   &-icon {
+    padding: .25rem;
+
     span {
       font-size: 0;
+    }
+
+    svg {
+      width: 24px;
     }
   }
 

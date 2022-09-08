@@ -38,6 +38,7 @@
     line-height: var(--heading-height);
     text-transform: uppercase;
     letter-spacing: .05em;
+    user-select: none;
     border-bottom: 1px solid var(--color-border);
   }
 

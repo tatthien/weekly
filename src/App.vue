@@ -20,9 +20,12 @@
 import { ref, computed } from 'vue';
 import AppHeader from '@/components/AppHeader.vue';
 import Note from '@/components/Note.vue';
-import { format } from 'date-fns';
+import { format, addDays } from 'date-fns';
+import useCalendar from './composables/use-calendar';
+import { formatDateToId } from './utils/calendar';
 
-const today = ref(new Date());
+const { firstDateOfWeek } = useCalendar();
+
 const calendar = ref([
 	'Monday',
 	'Tuesday',
@@ -34,22 +37,17 @@ const calendar = ref([
 	'This Month',
 	'Next Month',
 ]);
-const mondayOfCurrentWeek = computed(() => {
-	const first = today.value.getDate() - today.value.getDay() + 1;
-	const monday = new Date(today.value.setDate(first));
-	return monday;
-});
+
 const list = computed(() => {
 	return calendar.value.map((item, index) => {
-		const weekDateTimestamp = new Date().setDate(mondayOfCurrentWeek.value.getDate() + index);
-		const weekDate = index <= 6 ? new Date(weekDateTimestamp) : null;
+		const weekDate = index <= 6 ? addDays(firstDateOfWeek.value, index) : null;
 		let weekDay = item.toLowerCase().replace(/\s/gm, '_');
 		let dateLabel = '';
 		if (weekDate !== null) {
 			dateLabel = format(weekDate, 'dd.MM');
 		}
 		return {
-			id: weekDate !== null ? `${weekDay}_${format(weekDate, 'dd_MM_yyyy')}` : weekDay,
+			id: weekDate !== null ? formatDateToId(weekDate) : weekDay,
 			weekDay,
 			weekDate,
 			title: item,

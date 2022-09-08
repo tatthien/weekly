@@ -1,8 +1,8 @@
 <template>
 	<label :for="id" :class="noteClasses">
 		<span class="heading">
-			<span>{{ title }}</span>
-			<span :class="[!isToday ? 'secondary' : '']">{{ props.dateLabel }}</span>
+			<span>{{ props.dateLabel }}</span>
+			<span :class="[!isToday ? 'secondary' : '']">{{ title }}</span>
 		</span>
 		<pre ref="highlightEl" class="editor highlight" v-html="highlightContent"></pre>
 		<textarea :id="id" ref="editorEl" v-model="content" class="editor textarea"></textarea>
@@ -19,6 +19,7 @@ import auth from '../utils/get-firebase-auth';
 import { ref, computed, nextTick, onMounted } from 'vue';
 import debounce from 'lodash/debounce';
 import { addLog } from '../composables/use-logs';
+import { formatDateToId } from '../utils/calendar';
 
 const BRACKETS = new Map([
 	['[', ']'],
@@ -42,7 +43,7 @@ const isMonth = computed(() => {
 	return props.id.indexOf('month') >= 0;
 });
 const isToday = computed(() => {
-	return today.value.getDay() === props.index + 1;
+	return formatDateToId(today.value) === props.id;
 });
 const noteClasses = computed(() => {
 	let classes = ['note', props.id.split('_')[0]];

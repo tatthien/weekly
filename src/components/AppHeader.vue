@@ -9,7 +9,7 @@ import useUser from '../composables/use-user';
 import { latestLog, addLog } from '../composables/use-logs';
 import useCalendar from '../composables/use-calendar';
 
-const { nextWeek, prevWeek, firstDateOfWeek } = useCalendar();
+const { nextWeek, prevWeek, jumpToToday, firstDateOfWeek, isCurrentWeek } = useCalendar();
 const heading = computed(() => format(firstDateOfWeek.value, 'MMMM yyyy'));
 const showDropdown = ref(false);
 const showLogs = ref(false);
@@ -56,13 +56,14 @@ function logOut() {
 	<header class="app-header">
 		<div class="app-header__inner">
 			<div class="left">
-				<div>
+				<div class="flex items-center">
 					<WButton variant="ghost" icon class="mr-2" @click="prevWeek">
 						<ChevronLeftIcon />
 					</WButton>
 					<WButton variant="ghost" icon class="mr-2" @click="nextWeek">
 						<ChevronRightIcon />
 					</WButton>
+					<WButton v-if="!isCurrentWeek" variant="ghost" class="mr-2" @click="jumpToToday">Today</WButton>
 				</div>
 				<span class="font-bold">{{ heading }}</span>
 			</div>

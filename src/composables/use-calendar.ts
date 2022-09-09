@@ -1,7 +1,11 @@
-import { ref } from 'vue';
-import { addDays, subDays, startOfWeek } from 'date-fns';
+import { computed, ref } from 'vue';
+import { addDays, subDays, startOfWeek, compareAsc } from 'date-fns';
 
-const firstDateOfWeek = ref(startOfWeek(new Date(), { weekStartsOn: 1 }));
+const monday = startOfWeek(new Date(), { weekStartsOn: 1 });
+const firstDateOfWeek = ref(monday);
+const isCurrentWeek = computed(() => {
+	return compareAsc(firstDateOfWeek.value, monday) === 0;
+});
 
 export default function useCalendar() {
 	const nextWeek = () => {
@@ -12,9 +16,15 @@ export default function useCalendar() {
 		firstDateOfWeek.value = subDays(firstDateOfWeek.value, 7);
 	};
 
+	const jumpToToday = () => {
+		firstDateOfWeek.value = monday;
+	};
+
 	return {
 		firstDateOfWeek,
+		isCurrentWeek,
 		nextWeek,
 		prevWeek,
+		jumpToToday,
 	};
 }

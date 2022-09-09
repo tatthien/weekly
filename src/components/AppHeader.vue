@@ -28,7 +28,7 @@ const provider = new GoogleAuthProvider();
 
 onAuthStateChanged(auth, (user) => {
 	if (user) {
-		addLog(`Hi ${user.displayName}!`);
+		addLog(`✋ Hi ${user.displayName}!`);
 	}
 });
 

@@ -77,7 +77,7 @@ function logOut() {
 							<WButton class="user-avatar" variant="ghost" icon @click="showDropdown = !showDropdown">
 								<img :src="photoURL" :alt="displayName" />
 							</WButton>
-							<Transition name="slide">
+							<Transition name="dropdown">
 								<div v-if="showDropdown" class="dropdown-menu" role="menu">
 									<div class="dropdown-menu-item">
 										<div>Log in as</div>
@@ -111,6 +111,17 @@ function logOut() {
 
 .slide-enter-from,
 .slide-leave-to {
+	transform: translateY(10px);
+	opacity: 0;
+}
+
+.dropdown-enter-active,
+.dropdown-leave-active {
+	transition: all 0.2s cubic-bezier(0.85, 0, 0.56, 0.69);
+}
+
+.dropdown-enter-from,
+.dropdown-leave-to {
 	transform: translateY(10px);
 	opacity: 0;
 }

@@ -119,8 +119,6 @@ const autoSaveContent = debounce(() => {
 			} catch (error) {
 				throw Error(String(error));
 			}
-		} else {
-			// @TODO: local storage
 		}
 	});
 }, 500);
@@ -147,6 +145,9 @@ onAuthStateChanged(auth, async (user) => {
 			content.value = doc.data().content;
 		});
 	} else {
+		// Clear data
+		content.value = '';
+
 		// @TODO: local storage
 	}
 });

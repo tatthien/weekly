@@ -8,25 +8,34 @@ this method and easily adapt to it than other tools that I've tried like Trello,
 ## Usage
 
 ```
-o this is a new task.
-x completed task.
+[ ] Open
+[@] Ongoing
+[x] Completed
+[~] Obsolete
+
 ^ an event.
+
+## A bullet list
+
+- Item 1
+- Item 2
+
+## An ordered list
+
+1. First
+2. Second
+3. And the final
 
 Let's create a @tag
 
 Prioritize your task using !low !medium !high
 
-# You can use common markdown's syntax like:
+## You can use common markdown's syntax like:
 
 **bold**
 _italic_
 ~~strike through~~
-
-# Some ordered list
-
-1. First
-2. Second
-3. And the final
+`code`
 ```
 
 ## Contribute
@@ -36,19 +45,21 @@ I'd like to appreciate your contributions to improve the project better. Here ar
 ```
 # Project setup
 
-yarn install
+pnpm install
 
-# Compiles and hot-reloads for development
+# Start development
 
-yarn serve
+pnpm dev
 
 # Compiles and minifies for production
 
-yarn build
+pnpm build
 
-# Lints and fixes files
+# Lints, formats and fixes files
 
-yarn lint
+pnpm format
+pnpm lint
+pnpm stylelint
 ```
 
 ## Thanks

@@ -1,7 +1,7 @@
 import { useLocalStorage } from './use-local-storage';
-import useUser from './use-user';
 import { doc, getDocs, setDoc, collection, query, where } from 'firebase/firestore';
 import db from '../utils/get-firebase-db';
+import auth from '../utils/get-firebase-auth';
 
 interface DatabaseInterface {
 	read(id: string): any;
@@ -19,9 +19,10 @@ const plans = useLocalStorage('GET_WEEKLY_PLANS', plansDefaultValue);
 const DatabaseProviders: Record<'firebase' | 'localStorage', DatabaseInterface> = {
 	firebase: {
 		read: async (id: string) => {
+			const currentUser = auth.currentUser;
 			let data = null;
 			const q = query(
-				collection(db, `${import.meta.env.VITE_DB_NAME}/${useUser().uid.value}/plans`),
+				collection(db, `${import.meta.env.VITE_DB_NAME}/${currentUser?.uid}/plans`),
 				where('date', '==', id)
 			);
 			const querySnap = await getDocs(q);
@@ -32,7 +33,8 @@ const DatabaseProviders: Record<'firebase' | 'localStorage', DatabaseInterface> 
 			return data;
 		},
 		insert: async (id: string, data: Record<string, any>) => {
-			await setDoc(doc(db, `${import.meta.env.VITE_DB_NAME}/${useUser().uid.value}/plans/${id}`), data);
+			const currentUser = auth.currentUser;
+			await setDoc(doc(db, `${import.meta.env.VITE_DB_NAME}/${currentUser?.uid}/plans/${id}`), data);
 		},
 	},
 	localStorage: {

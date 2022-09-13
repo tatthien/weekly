@@ -1,5 +1,6 @@
 <template>
 	<AppHeader />
+	<div class="app-sidebar">1</div>
 	<main class="app-main">
 		<form class="grid">
 			<Note

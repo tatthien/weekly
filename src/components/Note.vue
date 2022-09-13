@@ -12,14 +12,17 @@
 <script lang="ts" setup>
 import { format } from 'date-fns';
 import hljs from 'highlight.js';
-import { doc, getDocs, setDoc, collection, query, where } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
-import db from '../utils/get-firebase-db';
 import auth from '../utils/get-firebase-auth';
 import { ref, computed, nextTick, onMounted } from 'vue';
 import debounce from 'lodash/debounce';
 import { addLog } from '../composables/use-logs';
 import { formatDateToId } from '../utils/calendar';
+import { useDatabaseProvider } from '../composables/use-database-provider';
+import contentPlaceholder from '../utils/get-data-placeholder';
+
+const firebaseProvider = useDatabaseProvider('firebase');
+const localStorageProvider = useDatabaseProvider('localStorage');
 
 const BRACKETS = new Map([
 	['[', ']'],
@@ -107,18 +110,22 @@ const highlightContent = computed(() => {
 
 const autoSaveContent = debounce(() => {
 	onAuthStateChanged(auth, async (user) => {
+		const id = props.weekDate ? format(props.weekDate, 'dd_MM_yyyy') : props.weekDay;
 		const data = {
 			content: content.value,
-			date: props.weekDate ? format(props.weekDate, 'dd_MM_yyyy') : props.weekDay,
+			date: id,
 		};
 
 		if (user) {
 			try {
-				await setDoc(doc(db, `${import.meta.env.VITE_DB_NAME}/${user.uid}/plans/${props.id}`), data);
+				firebaseProvider.insert(id, data);
 				addLog(`🎉 Saved at ${format(new Date(), 'dd-MM-yyyy H:ii:ss')}`);
 			} catch (error) {
 				throw Error(String(error));
 			}
+		} else {
+			localStorageProvider.insert(id, data);
+			addLog(`🎉 Saved at ${format(new Date(), 'dd-MM-yyyy H:ii:ss')}`);
 		}
 	});
 }, 500);
@@ -135,20 +142,17 @@ onMounted(() => {
 
 // Read data from firebase or local storage
 onAuthStateChanged(auth, async (user) => {
+	const id = props.weekDate ? format(props.weekDate, 'dd_MM_yyyy') : props.weekDay;
 	if (user) {
-		const q = query(
-			collection(db, `${import.meta.env.VITE_DB_NAME}/${user.uid}/plans`),
-			where('date', '==', props.weekDate ? format(props.weekDate, 'dd_MM_yyyy') : props.weekDay)
-		);
-		const querySnap = await getDocs(q);
-		querySnap.forEach((doc) => {
-			content.value = doc.data().content;
-		});
+		const data = await firebaseProvider.read(id);
+		content.value = data ? data.content : '';
 	} else {
-		// Clear data
-		content.value = '';
-
-		// @TODO: local storage
+		const data = localStorageProvider.read(id);
+		if (id === 'this_month' && data === null) {
+			content.value = contentPlaceholder;
+		} else {
+			content.value = data ? data.content : '';
+		}
 	}
 });
 

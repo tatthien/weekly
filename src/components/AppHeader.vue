@@ -40,6 +40,10 @@ function logInWithGoogle() {
 				accessToken: credential?.accessToken ?? '',
 				user: result.user,
 			});
+
+			// @TODO: should be removed?
+			// Reload page after logged in to prevent some unresolved bugs.
+			window.location.reload();
 		})
 		.catch((error) => {
 			throw Error(String(error));
@@ -49,6 +53,9 @@ function logInWithGoogle() {
 function logOut() {
 	signOut(auth).then(() => {
 		clearAuthData();
+		// @TODO: should be removed?
+		// Reload page after logged in to prevent some unresolved bugs.
+		window.location.reload();
 	});
 }
 </script>

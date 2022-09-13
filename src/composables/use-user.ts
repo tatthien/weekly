@@ -25,6 +25,14 @@ export default function useUser() {
 		return authData.value.user.photoURL;
 	});
 
+	const uid = computed(() => {
+		if (!authData.value) {
+			return null;
+		}
+
+		return authData.value.user.uid;
+	});
+
 	const isLoggedIn = computed(() => {
 		return !!authData.value?.accessToken;
 	});
@@ -40,6 +48,7 @@ export default function useUser() {
 	return {
 		displayName,
 		photoURL,
+		uid,
 		setAuthData,
 		clearAuthData,
 		isLoggedIn,

@@ -38,8 +38,12 @@ function getSerializerType<T>(rawData: T) {
 	return 'object';
 }
 
-export function useLocalStorage<T extends string | number | boolean | object | null>(key: string) {
+export function useLocalStorage<T extends string | number | boolean | object | null>(key: string, defaultValue?: T) {
 	const data = ref<T>();
+	if (defaultValue !== undefined) {
+		data.value = defaultValue;
+	}
+
 	const type = getSerializerType(data.value);
 	const serializer = StorageSerializers[type];
 
@@ -55,14 +59,20 @@ export function useLocalStorage<T extends string | number | boolean | object | n
 		{ deep: true }
 	);
 
-	data.value = read(key);
+	let localStorageData = read(key);
+	if (localStorageData === null && defaultValue !== undefined) {
+		localStorageData = defaultValue;
+	}
+	data.value = localStorageData;
 
 	return data;
 
 	function read(key: string) {
 		const rawData = window.localStorage.getItem(key);
-		if (rawData === null) return rawData;
-		return serializer.read(rawData || '');
+		if (rawData === null) {
+			return rawData;
+		}
+		return serializer.read(rawData);
 	}
 
 	function write(key: string) {

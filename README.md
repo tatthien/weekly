@@ -1,9 +1,9 @@
-# Bullet Journal
+# Weekly
 
 It's a methodology to keep track of your stuff like tasks, events, notes by creating the bullets. I found that I love
 this method and easily adapt to it than other tools that I've tried like Trello, note-taking apps, to-do apps.
 
-<img width="1792" alt="demo" src="https://user-images.githubusercontent.com/72242664/186437039-2260c441-79d7-4a41-99a5-f0906f625e36.png">
+<img width="1792" alt="demo" src="https://user-images.githubusercontent.com/72242664/189843980-8513c57b-5257-41f5-b636-52eb695d90c6.jpg">
 
 ## Usage
 

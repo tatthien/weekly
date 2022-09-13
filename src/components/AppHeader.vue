@@ -87,8 +87,8 @@ function logOut() {
 							</WButton>
 							<Transition name="dropdown">
 								<div v-if="showDropdown" class="dropdown-menu" role="menu">
-									<div class="dropdown-menu-item">
-										<div>Log in as</div>
+									<div class="dropdown-menu-item user-info">
+										<div class="text-secondary">Logged in as</div>
 										<div>
 											<strong>{{ displayName }}</strong>
 										</div>

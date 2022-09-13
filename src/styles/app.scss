@@ -110,6 +110,13 @@ body {
       border-radius: 50px;
     }
   }
+
+  .user-info {
+    cursor: initial;
+    &:hover {
+      background-color: #fff;
+    }
+  }
 }
 
 .right,

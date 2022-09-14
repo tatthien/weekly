@@ -76,7 +76,7 @@ const highlightContent = computed(() => {
 	codeHighlight = codeHighlight.replace(/~~(.*?)~~/g, `<span class="strikethrough">~~$1~~</span>`);
 
 	// Tag. Eg: @x-tag
-	codeHighlight = codeHighlight.replace(/@([\w-_]+)/g, `<span class="badge tag">@$1</span>`);
+	codeHighlight = codeHighlight.replace(/@([\w-_.]+)/g, `<span class="badge tag">@$1</span>`);
 
 	// Priorities. Eg: !High !Medium !Low
 	codeHighlight = codeHighlight.replace(/!(high|medium|low)/gim, (match, value) => {

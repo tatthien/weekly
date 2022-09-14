@@ -17,6 +17,7 @@
     "highlight.js": "^11.6.0",
     "lodash": "^4.17.21",
     "prettier": "^2.7.1",
+    "tippy.js": "^6.3.7",
     "vue": "^3.2.37"
   },
   "devDependencies": {

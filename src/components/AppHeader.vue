@@ -64,10 +64,10 @@ function logOut() {
 		<div class="app-header__inner">
 			<div class="left">
 				<div class="flex items-center">
-					<WButton variant="ghost" icon class="mr-2" @click="prevWeek">
+					<WButton v-tooltip="'Last week'" variant="ghost" icon class="mr-2" @click="prevWeek">
 						<ChevronLeftIcon />
 					</WButton>
-					<WButton variant="ghost" icon class="mr-2" @click="nextWeek">
+					<WButton v-tooltip="'Next week'" variant="ghost" icon class="mr-2" @click="nextWeek">
 						<ChevronRightIcon />
 					</WButton>
 					<WButton v-if="!isCurrentWeek" variant="ghost" class="mr-2" @click="jumpToToday">Today</WButton>

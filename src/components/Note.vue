@@ -30,6 +30,8 @@ const BRACKETS = new Map([
 	['{', '}'],
 ]);
 
+const TAB_SIZE = 2;
+
 type PropsType = {
 	id: string;
 	index: number;
@@ -183,6 +185,9 @@ function scrollSync() {
 }
 
 async function syncInputContent(e: KeyboardEvent) {
+	if (e.key === 'Tab') {
+		hitTab(e);
+	}
 	hitBracket(e.key, e);
 	autoSaveContent();
 }
@@ -201,5 +206,20 @@ function hitBracket(keyPressed: string, e: Event) {
 			e.preventDefault();
 		});
 	}
+}
+
+function hitTab(e: Event) {
+	e.preventDefault();
+
+	const val = editorEl.value.value;
+	const start = editorEl.value.selectionStart;
+	const end = editorEl.value.selectionEnd;
+
+	content.value = val.substring(0, start) + Array(TAB_SIZE).fill(' ').join('') + val.substring(end);
+
+	nextTick(() => {
+		// put the caret at right position again
+		editorEl.value.selectionStart = editorEl.value.selectionEnd = start + TAB_SIZE;
+	});
 }
 </script>

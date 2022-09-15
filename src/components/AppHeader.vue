@@ -81,7 +81,7 @@ function logOut() {
 
 				<nav>
 					<div v-if="isLoggedIn">
-						<div class="dropdown">
+						<div v-click-outside="() => (showDropdown = false)" class="dropdown">
 							<WButton class="user-avatar" variant="ghost" icon @click="showDropdown = !showDropdown">
 								<img :src="photoURL" :alt="displayName" />
 							</WButton>

@@ -1,3 +1,5 @@
+⚠️ This project has been archived. Please check out the version 2 [here](https://github.com/tatthien/myweek)
+
 # Weekly
 
 It's a methodology to keep track of your stuff like tasks, events, notes by creating the bullets. I found that I love
